@@ -1,0 +1,15 @@
+<h1>{{title}}</h1>
+<div>
+    <ul>
+        <li *ngFor="let item of items">
+            {{item}}
+        </li>
+    </ul>
+
+    <input id='task' type="text"
+           [(ngModel)]="task"
+           autocomplete="off"
+    >
+    <button (click)="addName()">Add</button>
+
+</div>
