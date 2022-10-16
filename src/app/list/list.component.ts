@@ -16,6 +16,7 @@ export class ListComponent implements OnInit {
     title = 'Potodo';
 
     task: string = '';
+    items: string[] = this.listService.getItems();
 
     addName() {
         this.listService.addItem(this.task)
