@@ -105,3 +105,4 @@ dist
 
 # Intellij
 .idea
+.angular/cache/14.2.6
