@@ -1,0 +1,22 @@
+<h1>
+    <a routerLink="">
+        {{title}}
+    </a>
+</h1>
+<div>
+    <ul>
+        <li *ngFor="let item of items" >
+            <list-item [content]="item.content" [id]="item.id"></list-item>
+        </li>
+    </ul>
+
+    <input id='task' type="text"
+           [(ngModel)]="task"
+           autocomplete="off"
+    >
+    <button [disabled]="task == ''" (click)="addName()">Add</button>
+</div>
+
+<div>
+    <router-outlet></router-outlet>
+</div>
