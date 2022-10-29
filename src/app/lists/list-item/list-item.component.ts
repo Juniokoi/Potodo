@@ -11,19 +11,9 @@ import {ListsService} from "../lists.service";
 export class ListItemComponent implements OnInit {
    @Input() content!: string;
    @Input() id!: string;
-    sub?: Subscription;
 
-
-    constructor(private listService: ListsService) {
-
-    }
-
-    ngOnInit(): void {
-    }
-
-    ngOnDestroy() {
-        this.sub?.unsubscribe();
-    }
+    constructor(private listService: ListsService) { }
+    ngOnInit(): void { }
 
     removeTask(task: string) {
         this.listService.removeItem(task);

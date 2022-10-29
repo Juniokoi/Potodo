@@ -5,6 +5,9 @@ import {ListPomoComponent} from "./list-pomo/list-pomo.component";
 import {FormsModule} from "@angular/forms";
 import {ListsService} from "./lists.service";
 import {ListRoutingModule} from "./lists-routing.module";
+import { ListGuard } from './guards/list.guard';
+import {ListDeactivateGuard} from "./guards/list-deactivate.guard";
+import {ListsResolver} from "./guards/lists.resolver";
 
 
 @NgModule({
@@ -20,7 +23,7 @@ import {ListRoutingModule} from "./lists-routing.module";
     exports: [
         ListItemComponent
     ],
-    providers: [ListsService]
+    providers: [ListsService, ListGuard, ListDeactivateGuard, ListsResolver]
 })
 export class ListsModule {
 }

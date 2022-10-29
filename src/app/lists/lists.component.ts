@@ -9,18 +9,12 @@ import {IItem} from "./IItem";
 })
 
 export class ListsComponent implements OnInit {
-    tempItems: any = [];
-
-    constructor(private listService: ListsService) {
-    }
-
-    ngOnInit(): void {
-    }
     items: IItem[] = this.listService.getListItems();
-
     title = 'Potodo';
-
     task: string = '';
+
+    constructor(private listService: ListsService) { }
+    ngOnInit(): void { }
 
     addName() {
         this.listService.addItem(this.task);
