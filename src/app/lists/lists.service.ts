@@ -18,15 +18,14 @@ export class ListsService {
                     {
                         id: item.id,
                         content: item.content,
-                        timer_active: item.timer_active,
-                        timer_sec: item.timer_sec,
-                        finished: item.finished,
+                        seconds: item.seconds,
+                        isActive: item.isActive,
+                        isFinished: item.isFinished,
                     }
                 ];
             }
         }
     }
-
     getListItems() {
         return this.items;
     }
@@ -48,9 +47,9 @@ export class ListsService {
         this.items.push({
             id: this.items.length.toString(),
             content: item,
-            timer_sec:0,
-            timer_active: false,
-            finished:false
+            seconds:0,
+            isActive: false,
+            isFinished:false
         });
 
         this.updateLS();

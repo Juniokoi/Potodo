@@ -1,5 +1,4 @@
-Item selecionado: {{id}}
-
-<input *ngIf="!isActive" type="button" value="Play" (click)="timerStart(30)">
-<input *ngIf="isActive" type="button" value="Pause" (click)="timerPause()">
-{{seconds}}
+Item selecionado: {{item.id}}
+<input *ngIf="!item.isActive" type="button" value="Play" (click)="timerStart(30)">
+<input *ngIf="item.isActive" type="button" value="Pause" (click)="timerPause()">
+{{item.seconds}}
