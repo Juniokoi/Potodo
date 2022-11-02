@@ -1,13 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ListItemComponent} from "./list-item/list-item.component";
-import {ListPomoComponent} from "./list-pomo/list-pomo.component";
+import {ListPomoComponent} from "./list-pomo/list-pomo.component"
 import {FormsModule} from "@angular/forms";
 import {ListsService} from "./lists.service";
 import {ListRoutingModule} from "./lists-routing.module";
 import { ListGuard } from './guards/list.guard';
 import {ListDeactivateGuard} from "./guards/list-deactivate.guard";
 import {ListsResolver} from "./guards/lists.resolver";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {ListsResolver} from "./guards/lists.resolver";
     imports: [
         CommonModule,
         ListRoutingModule,
-        FormsModule
+        FormsModule,
+        MatProgressSpinnerModule
     ],
     exports: [
         ListItemComponent

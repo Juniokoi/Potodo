@@ -1,4 +1,10 @@
-<input type="checkbox" name="check" >
-{{content}}
-<input type="button" value="Deletar" (click)="removeTask(content)" >
-<input type="button" value="Timer" [routerLink]="[id]" >
+<section (mouseenter)="hideOptions = false" (mouseleave)="hideOptions = true">
+    <div class="content">
+        <input name="check" type="checkbox">
+        {{content}}
+    </div>
+    <div class="options">
+        <input (click)="removeTask(content)" [hidden]="hideOptions" type="button" value="Deletar">
+        <input [hidden]="hideOptions" [routerLink]="[id]" type="button" value="Timer">
+    </div>
+</section>

@@ -1,4 +1,13 @@
-Item selecionado: {{item.id}}
-<input *ngIf="!item.isActive" type="button" value="Play" (click)="timerStart(30)">
-<input *ngIf="item.isActive" type="button" value="Pause" (click)="timerPause()">
-{{item.seconds}}
+<section>
+    {{item.content}}
+    {{minutes}}
+    {{extraSeconds}}
+    <mat-progress-spinner
+        class="example-margin"
+        [color]="color"
+        [mode]="mode"
+        [value]="percentage">
+    </mat-progress-spinner>
+    <input *ngIf="!item.isActive" type="button" value="Play" (click)="timerStart(30)">
+    <input *ngIf="item.isActive" type="button" value="Pause" (click)="timerPause()">
+</section>

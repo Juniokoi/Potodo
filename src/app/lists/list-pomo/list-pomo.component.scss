@@ -1,0 +1,11 @@
+@import "src/theme";
+
+section {
+    background-color: $brand-primary ;
+    color: $text-primary;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

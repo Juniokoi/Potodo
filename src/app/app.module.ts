@@ -9,6 +9,10 @@ import {HomeComponent} from './home/home.component';
 import {ListsModule} from "./lists/lists.module";
 import {NotFoundComponent} from './not-found/not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
     declarations: [
@@ -23,7 +27,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         ReactiveFormsModule,
         ListsModule,
         FormsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        NgbModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -3,5 +3,7 @@ export interface IItem {
     content: string,
     seconds: number;
     isActive: boolean,
-    isFinished: boolean;
+    isFinished: boolean,
+    percentage: number,
+    total: number;
 }

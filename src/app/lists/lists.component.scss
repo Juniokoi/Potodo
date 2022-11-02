@@ -1,0 +1,49 @@
+@import 'src/theme';
+
+main {
+    display: flex;
+    flex-direction: row;
+}
+.list-body {
+    background-color: $brand-primary;
+    min-width: 30vw;
+    margin: 3em; padding: 2rem;
+    border: 4px solid $surface_primary; border-radius: 15px; box-shadow: 0 2px 6px $shadow;
+}
+form {
+    position: relative;
+    top: 4em;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    button {
+        border: 2px solid $surface-primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.input {
+    border: 2px solid black;
+    border-radius: 8px;
+    width: 400px;
+
+    & > * {
+        height: 24px;
+        padding: 20px;
+    }
+
+    label {
+        top: -12px;
+    }
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+        margin-bottom: 1em;
+    }
+}
