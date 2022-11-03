@@ -8,6 +8,6 @@
         [mode]="mode"
         [value]="percentage">
     </mat-progress-spinner>
-    <input *ngIf="!item.isActive" type="button" value="Play" (click)="timerStart(30)">
-    <input *ngIf="item.isActive" type="button" value="Pause" (click)="timerPause()">
+    <input *ngIf="!isActive" type="button" value="Play" (click)="timerStart(30)">
+    <input *ngIf="isActive" type="button" value="Pause" (click)="timerPause()">
 </section>
