@@ -18,11 +18,7 @@ export class ListsService {
                     {
                         id: item.id,
                         content: item.content,
-                        seconds: item.seconds,
-                        isActive: item.isActive,
-                        isFinished: item.isFinished,
-                        total: item.total,
-                        percentage: item.percentage
+                        complete: item.complete
                     }
                 ];
             }
@@ -50,32 +46,10 @@ export class ListsService {
         this.items.push({
             id: this.items.length.toString(),
             content: task,
-            seconds: 0,
-            isActive: false,
-            isFinished: false,
-            percentage: 100,
-            total: 0
+            complete: false
         });
 
         this.updateLS();
-    }
-
-    updatePercentage(item: IItem): void {
-        // Receives an item and check its percentage
-        const temp = (( item.seconds - item.total) / (item.total + 1 )) * 100; // +1 to avoid 0/0
-        console.log(`Temp: ${temp}, Sec: ${item.seconds}, Total:  ${item.total}, Percentage: ${item.percentage}`);
-
-        // does nothing if item percentage === temp
-        if (temp != item.percentage)
-            if (Number.isFinite(temp)) {
-                item.percentage = temp
-                this.updateItem(item);
-            } else {
-                // Probably temp is infinite, so we presume its defined
-                item.percentage = 100;
-                this.updateItem(item);
-            }
-
     }
 
     getItem(id: string): IItem {

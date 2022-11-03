@@ -9,7 +9,6 @@ export class ListsResolver implements Resolve<IItem>{
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): IItem {
 
-        this.service.updatePercentage(this.service.getItem(route.paramMap.get('id')!))
         return this.service.getItem(route.paramMap.get('id')!);
     }
 }
