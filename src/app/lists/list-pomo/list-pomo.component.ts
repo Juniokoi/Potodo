@@ -11,7 +11,6 @@ import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
     selector: 'list-pomo',
     templateUrl: './list-pomo.component.html',
     styleUrls: ['./list-pomo.component.scss']
-
 })
 
 export class ListPomoComponent implements OnInit, ICanDeactivate {
@@ -20,15 +19,18 @@ export class ListPomoComponent implements OnInit, ICanDeactivate {
     interval: any;
     item!: IItem;
     isActive: boolean = false;
+    started: boolean = false;
 
     color: ThemePalette = 'primary';
     mode: ProgressSpinnerMode = 'determinate';
-    percentage: number = 0;
+    percentage: number = 100;
+    percentageStyle: string = `--p:${this.percentage}`;
 
     sec: number = 0;
     minutes: string = "00";
     extraSeconds: string = "00";
 
+    initial_timer = 0.25;
 
     constructor(
         private route: ActivatedRoute,
@@ -48,16 +50,43 @@ export class ListPomoComponent implements OnInit, ICanDeactivate {
     }
 
     canDeactivate(): boolean {
-        if (this.isActive) {
-            if (confirm("O seu pomodoro esta rolando, sair da página irá pausa-lo<br>Tem certeza que deseja sair?")) {
-                this.timerPause();
-                return true;
-            }
-            this.isActive = true
+        const redirectBack = (): boolean => {
+            this.isActive = true;
             this.router.navigate([`/app/${this.item.id}`]).then(r => r);
             return false;
+        };
+
+
+        if (this.isActive) {
+            if (confirm("O seu pomodoro esta rolando, sair da página irá pausa-lo<br>Tem certeza que deseja sair?")) {
+                this.pauseTimer();
+                this.resetTimer();
+                return true;
+            }
+            redirectBack();
         }
+
+        if (!this.isActive && this.started) {
+            if (confirm("O seu pomodoro já foi iniciado, mudar de ítem irá resetar o timer. Tem certeza?")) {
+                this.resetTimer();
+                return true;
+            }
+            redirectBack();
+        }
+
         return true;
+    }
+
+    updatePercentage(percentage?: number):void {
+        if (percentage) {
+            this.percentage = percentage
+        }
+        this.percentageStyle = `--p:${this.percentage}`;
+    }
+    calcPercentage(total: number, spent: number): number {
+        const percentage = ((total - spent) / total) * 100;
+        this.updatePercentage(percentage);
+        return percentage
     }
 
     updateItem() {
@@ -71,39 +100,49 @@ export class ListPomoComponent implements OnInit, ICanDeactivate {
         this.extraSeconds = (extraSeconds < 10 ? "0" + extraSeconds : extraSeconds).toString();
     }
 
-
-    calcPercentage(total: number, spent: number): number {
-        return ((total - spent) / total) * 100;
+    resetTimer(): void {
+        this.sec = 0;
+        this.updateTimer();
+        this.updatePercentage(100);
+        this.isActive = false;
+        this.started = false;
     }
 
-    timerStart(mins: number): void {
-        const total_time = mins * 60;
+    pauseTimer(): void {
+        clearInterval(this.interval);
+        this.isActive = false;
+    }
 
-        if (this.sec === 0) this.sec = total_time
-
+    startTimer(): void {
         this.isActive = true;
+        this.started = true;
+        this.updatePercentage(0);
+
+        const total_time = (this.initial_timer * 60) + 1;
+        if (this.sec === 0) this.sec = total_time;
 
         this.interval = setInterval(() => {
+            this.sec--;
+
             this.percentage = this.calcPercentage(total_time, this.sec);
             this.updateTimer();
 
-            this.sec--;
-
             // When times ends, shouts an alert
-            if (this.sec <= 0) {
+            if (this.percentage === 100) {
                 this.isActive = false;
                 this.item.complete = true;
                 clearInterval(this.interval);
-                alert("🚨 It is Cool 😎. I wish you could share ");
                 this.updateItem();
+                this.resetTimer();
+                this.pauseTimer();
+                this.updatePercentage(100)
+                setTimeout(()=>{
+                    alert("🚨 It is Cool 😎. I wish you could share ");
+                }, 1000)
             }
         }, 1000);
     }
 
-    timerPause(): void {
-        clearInterval(this.interval)
-        this.isActive = false;
-    }
 
     ngOnDestroy() {
         this.sub.unsubscribe();
