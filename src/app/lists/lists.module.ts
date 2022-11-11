@@ -9,12 +9,14 @@ import { ListGuard } from './guards/list.guard';
 import {ListDeactivateGuard} from "./guards/list-deactivate.guard";
 import {ListsResolver} from "./guards/lists.resolver";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { SpinnerComponent } from './list-pomo/spinner/spinner.component';
 
 
 @NgModule({
     declarations: [
         ListItemComponent,
-        ListPomoComponent
+        ListPomoComponent,
+        SpinnerComponent
     ],
     imports: [
         CommonModule,

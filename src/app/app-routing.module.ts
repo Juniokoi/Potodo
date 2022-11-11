@@ -9,7 +9,7 @@ const routes: Routes = [
     {path: 'app', loadChildren: () =>
             import('./lists/lists.module').then(mod => mod.ListsModule),
     },
-    {path: '**', component: NotFoundComponent}
+    // {path: '**', component: NotFoundComponent}
 
 ];
 

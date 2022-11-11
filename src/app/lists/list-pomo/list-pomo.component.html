@@ -1,13 +1,9 @@
 <section>
     {{item.content}}
-    {{minutes}}
-    {{extraSeconds}}
-    <mat-progress-spinner
-        class="example-margin"
-        [color]="color"
-        [mode]="mode"
-        [value]="percentage">
-    </mat-progress-spinner>
-    <input *ngIf="!isActive" type="button" value="Play" (click)="timerStart(30)">
-    <input *ngIf="isActive" type="button" value="Pause" (click)="timerPause()">
+    <div class="timer">
+        {{minutes}}:{{extraSeconds}}
+    </div>
+    <app-spinner [percentage]="percentageStyle"></app-spinner>
+    <input *ngIf="!isActive" type="button" value="Play" (click)="startTimer()">
+    <input *ngIf="isActive" type="button" value="Pause" (click)="pauseTimer()">
 </section>
