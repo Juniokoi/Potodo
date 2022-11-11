@@ -5,9 +5,11 @@ import {ListPomoComponent} from "./list-pomo/list-pomo.component";
 import { ListGuard } from './guards/list.guard';
 import {ListDeactivateGuard} from "./guards/list-deactivate.guard";
 import {ListsResolver} from "./guards/lists.resolver";
+import {ListItemComponent} from "./list-item/list-item.component";
 
 const routes: Routes = [{
     path: '', component: ListsComponent, children: [
+        {path: '', component: ListItemComponent},
         {path: ':id', component: ListPomoComponent, canActivate: [ListGuard], canDeactivate: [ListDeactivateGuard], resolve: {tasks: ListsResolver}},
     ]
 },];

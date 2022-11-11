@@ -1,10 +1,28 @@
-<section (mouseenter)="hideOptions = false" (mouseleave)="hideOptions = true">
-    <div class="content">
-        <input name="check" type="checkbox">
-        {{content}}
+    <div class="list-body">
+        <ul>
+            <li *ngFor="let item of items">
+                <section (mouseenter)="hoverItem = item.id" (mouseleave)="hoverItem = ''">
+                    <div class="content">
+                        <input name="check" type="checkbox">
+                        {{item.content}}
+                    </div>
+                    <div [hidden]="hoverItem != item.id" class="options">
+                        <input (click)="removeTask(item.content)"  type="button" value="Deletar">
+                        <input [routerLink]="[item.id]" type="button" value="Timer">
+                    </div>
+                </section>
+            </li>
+        </ul>
+
+        <form class="form" [formGroup]="form" (ngSubmit)="addTask()">
+            <div class="form-floating input text-black">
+                <input formControlName="task" type="text" class="form-control" id="floatingInput"
+                       placeholder="Adicione sua tarefa">
+                <label for="floatingInput">Adicionar tarefa</label>
+            </div>
+
+            <button  (click)="addTask()" [class]="isValid() ? '_valid' : '_disabled'" [disabled]="!isValid()">
+                +
+            </button>
+        </form>
     </div>
-    <div class="options">
-        <input (click)="removeTask(content)" [hidden]="hideOptions" type="button" value="Deletar">
-        <input [hidden]="hideOptions" [routerLink]="[id]" type="button" value="Timer">
-    </div>
-</section>

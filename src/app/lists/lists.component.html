@@ -31,25 +31,6 @@
     </nav>
 
     <section>
-        <div class="list-body">
-            <ul>
-                <li *ngFor="let item of items">
-                    <list-item [content]="item.content" [id]="item.id"></list-item>
-                </li>
-            </ul>
-            <form class="form" [formGroup]="form" (ngSubmit)="addTask()">
-                <div class="form-floating input text-black">
-                    <input formControlName="task" type="text" class="form-control" id="floatingInput"
-                           placeholder="Adicione sua tarefa">
-                    <label for="floatingInput">Adicionar tarefa</label>
-                </div>
-
-                <button mat-mini-fab (click)="addTask()" [disabled]="!isValid()">
-                    <mat-icon>add</mat-icon>
-                </button>
-            </form>
-        </div>
-
         <div>
             <router-outlet></router-outlet>
         </div>
