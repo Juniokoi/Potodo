@@ -14,6 +14,8 @@ export class ListsComponent implements OnInit {
     items: IItem[] = this.listService.getListItems();
     title = 'Potodo';
     hideOptions: boolean;
+    hasTimer = true;
+    currentId = 0
 
     constructor(
         private listService: ListsService,

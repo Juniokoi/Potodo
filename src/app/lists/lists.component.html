@@ -1,28 +1,57 @@
-<h1>
-    <a routerLink="">
-        {{title}}
-    </a>
-</h1>
 <main>
-    <div class="list-body">
+    <nav>
+        <button class="title" routerLink="" routerLinkActive="" aria-label="Potodo Logotype">
+            <div class="icon brand"></div>
+        </button>
         <ul>
-            <li *ngFor="let item of items" >
-                <list-item [content]="item.content" [id]="item.id" ></list-item>
+            <li>
+                <a routerLink="/app" routerLinkActive="route-active" [routerLinkActiveOptions]="{exact: true}" >
+                    <div  class="icon menu"></div>
+                </a>
+            </li>
+
+            <li *ngIf="hasTimer">
+                <a [routerLink]="['/app', currentId]" routerLinkActive="route-active">
+                    <div  class="icon timer"></div>
+                </a>
+            </li>
+
+            <li>
+                <a routerLink="/config" routerLinkActive="route-active">
+                    <div class="icon config"></div>
+                </a>
+            </li>
+
+            <li>
+                <a routerLink="/user" routerLinkActive="route-active">
+                    <div class="icon user"></div>
+                </a>
             </li>
         </ul>
-        <form class="form" [formGroup]="form" (ngSubmit)="addTask()" >
-            <div class="form-floating input text-black">
-                <input formControlName="task" type="text" class="form-control" id="floatingInput" placeholder="Adicione sua tarefa">
-                <label for="floatingInput">Adicionar tarefa</label>
-            </div>
+    </nav>
 
-            <button mat-mini-fab (click)="addTask()" [disabled]="!isValid()">
-                <mat-icon>add</mat-icon>
-            </button>
-        </form>
-    </div>
+    <section>
+        <div class="list-body">
+            <ul>
+                <li *ngFor="let item of items">
+                    <list-item [content]="item.content" [id]="item.id"></list-item>
+                </li>
+            </ul>
+            <form class="form" [formGroup]="form" (ngSubmit)="addTask()">
+                <div class="form-floating input text-black">
+                    <input formControlName="task" type="text" class="form-control" id="floatingInput"
+                           placeholder="Adicione sua tarefa">
+                    <label for="floatingInput">Adicionar tarefa</label>
+                </div>
 
-    <div>
-        <router-outlet></router-outlet>
-    </div>
+                <button mat-mini-fab (click)="addTask()" [disabled]="!isValid()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </form>
+        </div>
+
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </section>
 </main>

@@ -1,8 +1,70 @@
 @import 'src/theme';
+$border: 125px;
 
-main {
+main, section {
     display: flex;
     flex-direction: row;
+}
+@mixin _url($item) {
+    mask: url("../../assets/navbar/" + $item + ".svg") no-repeat center;
+}
+.route-active {
+     div {
+    background-color: #FBBF24;
+    }
+}
+nav {
+    padding: 4em 0;
+    background: $surface-primary;
+    position: fixed;
+
+    width: $border; height: 100%; min-height: 400px;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr; grid-template-columns: 1fr; grid-template-areas: "title" "navItems" ".";
+
+    .title {
+        align-self: start; grid-area: title; justify-self: center;
+        width: auto;
+        background-color: transparent;
+        border: transparent;
+        .brand {
+            @include _url("Brand");
+            background: #FBBF24;
+            width: 74px; height: 42px;
+
+            transition: background-color ease-in 100ms 200ms;
+            &:hover {
+                background: blueviolet;
+                transition-delay: 0ms;
+            }
+        }
+    }
+    ul {
+        grid-area: navItems;
+        li {
+            padding: 1rem 0;
+            list-style: none;
+            .menu {
+                @include _url("Menu");
+            }
+            .timer {
+                @include _url("Timer");
+            }
+            .config {
+                @include _url("Config");
+            }
+            .user {
+                @include _url("User");
+            }
+        }
+    }
+}
+.icon {
+    $size: 48px;
+    width: $size; height: $size;
+
+    background-color:  #FFFFFF;
 }
 .list-body {
     background-color: $brand-primary;
@@ -39,11 +101,14 @@ form {
     }
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+section{
+    margin-left: $border;
+    ul {
+        list-style: none;
+        padding: 0;
 
-    li {
-        margin-bottom: 1em;
+        li {
+            margin-bottom: 1em;
+        }
     }
 }
