@@ -1,0 +1,43 @@
+@import "../../../../../styles/theme";
+
+$border: var(--border, 15px);
+$width: var(--width, 200px);
+$percentage: var(--percentage, 100);
+$color: $brand-primary;
+
+.pie {
+    width: $width;
+    aspect-ratio:1;
+    position:relative;
+    display:inline-grid;
+    margin:5px;
+    place-content:center;
+    font-size:25px;
+    font-weight:bold;
+    font-family:sans-serif;
+    transition: all 100ms ease-in;
+}
+.pie:before,
+.pie:after {
+    content:"";
+    position:absolute;
+    border-radius:50%;
+}
+// Main slider settings
+.pie:before {
+    inset:0;
+    background:
+        conic-gradient( $brand-secondary 0 ,$color calc($percentage *1%), #0000 0), // Main slider
+        radial-gradient(farthest-side,$brand-secondary 95%,#0001) top / calc($border + 1px) calc($border + 1px) no-repeat, // It renders a round pointer on the start
+        radial-gradient( farthest-side, #000000aa 0, transparent 120%); // Creates an gradient
+
+    mask:radial-gradient(farthest-side,#0000 calc(99% - $border),#000 calc(100% - $border)); // Remove black border
+
+    transition: all 100ms ease-in;
+}
+// Ball Pointer at the end of the slider
+.pie:after {
+    inset:calc(50% - ($border + 0.5px )/2);
+    background: $color;
+    transform:rotate(calc($percentage *3.6deg)) translateY( calc(50% -  $width / 2));
+}

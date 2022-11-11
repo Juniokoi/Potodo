@@ -1,0 +1,76 @@
+@import '../../../styles/base';
+
+$border: 90px;
+
+section {
+    margin-left: $border;
+    display: flex;
+    justify-content: center;
+}
+
+nav {
+    padding: 4em 0;
+    background: $surface-primary;
+    position: fixed;
+    border-radius: 0 25px 25px 0;
+
+    width: $border; height: 100%; min-height: 400px;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr; grid-template-columns: 1fr; grid-template-areas: "title" "navItems" ".";
+
+    .title {
+        align-self: start; grid-area: title; justify-self: center;
+        width: auto;
+        background-color: transparent;
+        border: transparent;
+        .brand {
+            @include _url("Brand");
+            background: #FBBF24;
+            width: 74px; height: 42px;
+
+            transition: background-color ease-in 100ms 200ms;
+            &:hover {
+                background: blueviolet;
+                transition-delay: 0ms;
+            }
+        }
+    }
+
+    ul {
+        padding: 0;
+        grid-area: navItems;
+        justify-self: center;
+
+        li {
+            padding: 1rem 0;
+            list-style: none;
+            .menu {
+                @include _url("Menu");
+            }
+            .timer {
+                @include _url("Timer");
+            }
+            .config {
+                @include _url("Config");
+            }
+            .user {
+                @include _url("User");
+            }
+        }
+    }
+}
+
+
+.icon {
+    $size: 32px;
+    width: $size; height: $size;
+
+    background-color:  #FFFFFF;
+}
+
+.route-active {
+    div {
+        background-color: #FBBF24;
+    }
+}
