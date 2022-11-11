@@ -24,7 +24,6 @@ export class ListPomoComponent implements OnInit, ICanDeactivate {
     color: ThemePalette = 'primary';
     mode: ProgressSpinnerMode = 'determinate';
     percentage: number = 100;
-    percentageStyle: string = `--p:${this.percentage}`;
 
     sec: number = 0;
     minutes: string = "00";
@@ -77,16 +76,17 @@ export class ListPomoComponent implements OnInit, ICanDeactivate {
         return true;
     }
 
-    updatePercentage(percentage?: number):void {
+    updatePercentage(percentage?: number): void {
         if (percentage) {
-            this.percentage = percentage
+            this.percentage = percentage;
         }
-        this.percentageStyle = `--p:${this.percentage}`;
+        document.documentElement.style.setProperty('--percentage', this.percentage.toString());
     }
+
     calcPercentage(total: number, spent: number): number {
         const percentage = ((total - spent) / total) * 100;
         this.updatePercentage(percentage);
-        return percentage
+        return percentage;
     }
 
     updateItem() {
@@ -113,6 +113,11 @@ export class ListPomoComponent implements OnInit, ICanDeactivate {
         this.isActive = false;
     }
 
+    stopTimer() {
+        this.pauseTimer();
+        this.resetTimer();
+    }
+
     startTimer(): void {
         this.isActive = true;
         this.started = true;
@@ -135,10 +140,10 @@ export class ListPomoComponent implements OnInit, ICanDeactivate {
                 this.updateItem();
                 this.resetTimer();
                 this.pauseTimer();
-                this.updatePercentage(100)
-                setTimeout(()=>{
+                this.updatePercentage(100);
+                setTimeout(() => {
                     alert("🚨 It is Cool 😎. I wish you could share ");
-                }, 1000)
+                }, 1000);
             }
         }, 1000);
     }

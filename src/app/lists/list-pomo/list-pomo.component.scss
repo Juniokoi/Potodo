@@ -1,11 +1,127 @@
-@import "src/theme";
+@use "./spinner";
+@use "src/theme";
+
+@mixin _shadow($range, $color) {
+    box-shadow: 0 0 $range $color;
+}
+
+@mixin _cfgButton($color) {
+    border: 2px solid $color;
+    @include _shadow(6px,#{$color}33);
+    &:hover {
+        @include _shadow(12px,#{$color}44);
+        background-color: $color;
+    }
+}
 
 section {
-    background-color: $brand-primary ;
-    color: $text-primary;
-    width: 400px;
+    color: theme.$text-primary;
+    background-color: theme.$surface-primary;
+    margin-top: 4rem;
+    min-width: 200px;
+    padding: 2rem 4rem;
+    position: relative;
+
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+
+    border: 4px solid theme.$surface-primary;
+    border-radius: 25px;
+    box-shadow: 0 4px 30px theme.$surface-primary;
+
+    .title {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: ". title edit";
+        align-items: center;
+        color: theme.$text-primary;
+        gap: 16px;
+        margin-bottom: 32px;
+        h3 {
+            grid-area: title;
+            place-self: center;
+            font-size: 2em;
+            height: auto;
+            margin: 0;
+        }
+
+        .edit {
+            grid-area: edit;
+            mask: url("../../../assets/timerScreen/Pencil.svg") no-repeat center;
+            $_size: 24px;
+            place-content: center;
+            width: $_size; height: $_size;
+            background-color: #{theme.$text-secondary}99 ;
+            cursor: pointer;
+        }
+    }
+
+    .clock {
+        $_border: 30px;
+
+        aspect-ratio: 1; // force div to be square
+        position: relative;
+        display: inline-grid;
+        place-content: center;
+        margin-bottom: 1rem;
+
+        .timer {
+            position: absolute;
+            place-self: center;
+            font-size: 2rem;
+        }
+
+        &:before, &:after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        &:before {
+            filter: opacity(10%);
+            inset: 0;
+            background: radial-gradient(circle at 10%, #e66465aa 10%, #9198e5aa calc(99% - $_border));
+            -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - $_border), #000 calc(100% - $_border));
+            mask: radial-gradient(farthest-side, #000 calc(99% - $_border), #0000 calc(100% - $_border));
+        }
+
+        &:after {
+            inset: 14.7%;
+            box-shadow: 0 0 10px #000000aa;
+        }
+    }
+
+    input[type=button] {
+        background-color: transparent;
+        border-radius: 5px;
+        padding: 0.25em 1em;
+        margin-bottom: 1em;
+        transition: all 100ms ease-in;
+        color: theme.$text-secondary;
+        font-weight: 500;
+
+        &:hover {
+            color: theme.$text-secondary;
+            transition-delay: 0ms;
+            transform: scale(105%);
+        }
+    }
+
+    .play {
+        @include _cfgButton(theme.$brand-primary);
+        &:hover {
+            color: theme.$text-on-tooltip !important;
+        }
+    }
+
+    .pause {
+        @include _cfgButton(#000000);
+    }
+
+    .stop {
+        @include _cfgButton(#ff0000);
+    }
 }

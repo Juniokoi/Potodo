@@ -14,3 +14,59 @@ section {
     justify-content: space-between;
     align-items: center;
 }
+.list-body {
+    background-color: $surface-primary;
+    min-width: 30vw;
+    margin: 3em; padding: 2rem;
+    border: 4px solid $surface_primary; border-radius: 15px; box-shadow: 0 2px 15px #{$brand-secondary}30;
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin-bottom: 1em;
+        }
+    }
+}
+form {
+    position: relative;
+    top: 4em;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    button {
+        border: 2px solid $surface-primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        height: 35px;
+        width: 40px;
+        font-size: 32px;
+        background-color: $brand-primary;
+        transition: all 100ms ease-in;
+    }
+    ._valid {
+        filter: opacity(100%);
+        box-shadow: 0 2px 20px #{$brand-secondary}30;
+        transform: scale(110%);
+    }
+    ._disabled {
+        filter: opacity(30%);
+    }
+}
+
+.input {
+    border: 2px solid black;
+    border-radius: 8px;
+    width: 400px;
+
+    & > * {
+        height: 24px;
+        padding: 20px;
+    }
+
+    label {
+        top: -12px;
+    }
+}
