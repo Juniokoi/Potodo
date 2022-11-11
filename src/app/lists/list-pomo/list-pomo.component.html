@@ -1,9 +1,20 @@
 <section>
-    {{item.content}}
-    <div class="timer">
-        {{minutes}}:{{extraSeconds}}
+    <div class="title">
+        <h3>
+            {{item.content}}
+        </h3>
+        <div class="edit"></div>
     </div>
-    <app-spinner [percentage]="percentageStyle"></app-spinner>
-    <input *ngIf="!isActive" type="button" value="Play" (click)="startTimer()">
-    <input *ngIf="isActive" type="button" value="Pause" (click)="pauseTimer()">
+
+    <div class="clock">
+        <div class="timer">
+            {{minutes}}:{{extraSeconds}}
+        </div>
+        <div class="pie"></div>
+    </div>
+
+    <input *ngIf="!isActive" class="play" type="button" [value]="started ? 'Voltar' : 'Iniciar'" (click)="startTimer()">
+    <input *ngIf="isActive" class="pause" type="button" value="Pausar" (click)="pauseTimer()">
+    <input *ngIf="started" class="stop" type="button" value="Desistir" (click)="stopTimer()">
+
 </section>
