@@ -1,0 +1,38 @@
+<main>
+    <nav>
+        <button class="title" routerLink="" routerLinkActive="" aria-label="Potodo Logotype">
+            <div class="icon brand"></div>
+        </button>
+        <ul>
+            <li>
+                <a routerLink="/timer/list" routerLinkActive="route-active" [routerLinkActiveOptions]="{exact: true}" >
+                    <div  class="icon menu"></div>
+                </a>
+            </li>
+
+            <li *ngIf="hasTimer">
+                <a [routerLink]="['/timer', currentId]" routerLinkActive="route-active">
+                    <div  class="icon timer"></div>
+                </a>
+            </li>
+
+            <li>
+                <a routerLink="/config" routerLinkActive="route-active">
+                    <div class="icon config"></div>
+                </a>
+            </li>
+
+            <li>
+                <a routerLink="/user" routerLinkActive="route-active">
+                    <div class="icon user"></div>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <section>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </section>
+</main>

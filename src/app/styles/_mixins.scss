@@ -1,0 +1,3 @@
+@mixin _url($item) {
+    mask: url("/assets/icons/navbar/" + $item + ".svg") no-repeat center;
+}
