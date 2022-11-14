@@ -13,6 +13,7 @@ import {PomodoroComponent} from "./components/pomodoro/pomodoro.component";
 import {ListGuard} from './guards/list.guard';
 import {ListsResolver} from "./guards/lists.resolver";
 import {TimerDeactivateGuard} from "./guards/timer-deactivate.guard";
+import { ConfigComponent } from './components/config/config.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {TimerDeactivateGuard} from "./guards/timer-deactivate.guard";
         TimerComponent,
         ListComponent,
         PomodoroComponent,
+        ConfigComponent,
     ],
     providers: [TimerService,ListGuard, ListsResolver, TimerDeactivateGuard]
 

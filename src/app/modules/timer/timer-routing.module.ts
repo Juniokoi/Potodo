@@ -8,13 +8,15 @@ import {PomodoroComponent} from "./components/pomodoro/pomodoro.component";
 import {ListGuard} from './guards/list.guard';
 import {ListsResolver} from "./guards/lists.resolver";
 import {TimerDeactivateGuard} from "./guards/timer-deactivate.guard";
+import {ConfigComponent} from "./components/config/config.component";
 
-export const routes: Routes = [{
-    path: '', component: TimerComponent, children: [
+export const routes: Routes = [
+    { path: '', component: TimerComponent, children: [
         {
             path: '',
             component: ListComponent,
         },
+        { path: 'config', component: ConfigComponent },
         {
             path: ':id',
             component: PomodoroComponent,
