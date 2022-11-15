@@ -1,41 +1,62 @@
+<main>
 <h2>Configuração</h2>
 
-<form [formGroup]="form">
+<form [formGroup]="form" >
+    <h3>tempo (em minutos)</h3>
     <div class="settings">
-        <div>
-            pomodoro: <br>
-            25
-            <number-selector></number-selector>
+        <div >
+            Foco: <br>
+            <div class="box">
+                    <input  type="number" placeholder="25"  min="0" max="60" formControlName="focus">
+                    <div class="buttons">
+                    <button (click)="add('focus')"><img src="/assets/icons/config/Arrow.svg" alt="Up arrow"></button>
+                    <button (click)="sub('focus')"><img src="/assets/icons/config/Arrow.svg" alt="Down arrow"></button>
+                </div>
+            </div>
         </div>
 
         <div>
-            pequena pausa: <br>
-            5
+            Pausa curta: <br>
+            <div class="box">
+                <input  type="number" placeholder="5" min="0" max="60" formControlName="short">
+                <div class="buttons">
+                    <button (click)="add('short')"><img src="/assets/icons/config/Arrow.svg" alt="Up arrow"></button>
+                    <button (click)="sub('short')"><img src="/assets/icons/config/Arrow.svg" alt="Down arrow"></button>
+                </div>
+            </div>
         </div>
 
         <div>
-            grande pause: <br>
-            15
+            Pausa longa: <br>
+            <div class="box">
+                <input  type="number" placeholder="30" min="0" max="60" formControlName="long">
+                <div class="buttons">
+                    <button (click)="add('long')"><img src="/assets/icons/config/Arrow.svg" alt="Up arrow"></button>
+                    <button (click)="sub('long')"><img src="/assets/icons/config/Arrow.svg" alt="Down arrow"></button>
+                </div>
+            </div>
         </div>
+        
     </div>
 
-    <div class="options">
-        <div>
+    <div class="options" aria-disabled="true">
+        <div class="opt-item pause-auto" aria-disabled="false">
             <label for="pause-auto">
                 Pausar automaticamente após completar o pomodoro
             </label>
-            <input type="checkbox" name="pause-auto" id="pause-auto">
+            <input type="checkbox" name="pause-auto" id="pause-auto" formControlName="autoPause">
         </div>
 
-        <div>
+        <div class="opt-item play-auto" aria-disabled="false">
             <label for="play-auto">
-                Continuar pomodoro <br>
-                automaticamente após a pausa <br>
+                Continuar automaticamente um <br>
+                novo pomodoro após a pausa <br>
             </label>
-            <input type="checkbox" name="play-auto" id="play-auto">
+            <input type="checkbox" name="play-auto" id="play-auto" formControlName="autoPlay">
         </div>
     </div>
 
-    <button>Cancelar</button>
-    <button>Salvar</button>
+    <button routerLink="/timer">Cancelar</button>
+    <button (click)="saveUser()">Salvar</button>
 </form>
+</main>

@@ -1,14 +1,128 @@
-.settings {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-    & * {
-        padding: 1rem;
-    }
-}
-.options {
-    label {
-    filter: opacity(50%);
+@import "../../../../styles/theme";
+
+main {
+    background-color: $surface-secondary;
+    margin: 30px;
+    padding: 40px;
+    border: 1px solid #{$brand-primary}aa;
+    border-radius: 25px;
+    box-shadow: 0 4px 30px #00000077;
+
+    h2 {
+        margin: 0;
     }
 
+    form {
+
+        h3 {
+            font-weight: 500;
+            margin: 32px 0 0;
+        }
+
+        .settings {
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            justify-content: space-between;
+                gap: 16px;
+            & div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 16px 0;
+                min-width: 97px;
+                & number-selector {
+                    margin: 8px;
+                }
+            }
+        }
+
+        .options {
+            padding: 1em;
+            .opt-item {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-content: center;
+                margin-bottom: 25px;
+
+                & label {
+                    width: 240px;
+                    filter: opacity(50%);
+                }
+                &:first-child label {
+                    width: 220px;
+                }
+            }
+        }
+    }
+}
+
+.box {
+    position: relative;
+    flex-direction: row;
+    $size: 50px;
+    input {
+        width: $size;
+        height: $size;
+        text-align: center;
+        font-size: 1em;
+        color: white;
+        background-color: $surface-primary;
+        border: 1px solid #{$brand-primary}aa;
+        border-radius: 10px;
+        z-index: 4;
+    }
+
+    /* Chrome, Opera, Edge, Safari and others... */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+
+        position: absolute;
+        left: calc(  $size - 5px );
+        filter: opacity(0);
+        transition: all 200ms ease-in 200ms;
+        & button {
+            $size: 24px;
+            height: $size; width: $size;
+
+
+            display: grid; place-content: center;
+            border-radius: 5px;
+            background-color: $brand-primary;
+            color: $text-on-tooltip;
+            border: none;
+            margin: 2px 0;
+            padding: 0;
+            img {
+                $size: 16px;
+                margin: 0;
+                padding: 0;
+
+                height: $size; width: $size;
+            }
+            &:last-child img {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    &:hover {
+        .buttons {
+            transition-delay: 0ms;
+            filter: opacity(100%);
+        }
+    }
 }
