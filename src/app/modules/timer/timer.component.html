@@ -5,14 +5,14 @@
         </button>
         <ul>
             <li>
-                <a routerLink="/timer/list" routerLinkActive="route-active" [routerLinkActiveOptions]="{exact: true}" >
-                    <div  class="icon menu"></div>
+                <a routerLink="/timer/list" routerLinkActive="route-active" [routerLinkActiveOptions]="{exact: true}">
+                    <div class="icon menu"></div>
                 </a>
             </li>
 
             <li *ngIf="hasTimer">
                 <a [routerLink]="['/timer', currentId]" routerLinkActive="route-active">
-                    <div  class="icon timer"></div>
+                    <div class="icon timer"></div>
                 </a>
             </li>
 

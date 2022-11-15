@@ -1,0 +1,14 @@
+.settings {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    & * {
+        padding: 1rem;
+    }
+}
+.options {
+    label {
+    filter: opacity(50%);
+    }
+
+}
