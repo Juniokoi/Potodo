@@ -52,6 +52,7 @@ form {
         filter: opacity(100%);
         box-shadow: 0 2px 20px #{$brand-secondary}30;
         transform: scale(110%);
+        cursor: pointer;
     }
     ._disabled {
         filter: opacity(30%);
@@ -64,11 +65,12 @@ form {
 
     & > * {
         height: 24px;
-        padding: 20px;
+        padding: 15px;
     }
 
     input {
-        transition: all 100ms ease-in-out;
+        transition: all 100ms ease-in;
+        font-size: 1em;
     }
 
     label {
@@ -77,5 +79,13 @@ form {
         height: auto;
         color: black;
         left: 0;
+        user-select: none;
+        transition: all 100ms ease-in-out 100ms;
+    }
+
+    .focused {
+        transform: scale(90%) translateY(-15px) translateX(-15px);
+        transition-delay: 0ms;
+        filter: opacity(80%);
     }
 }

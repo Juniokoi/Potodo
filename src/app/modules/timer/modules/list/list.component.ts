@@ -13,6 +13,29 @@ export class ListComponent implements OnInit {
     items: IItem[] = this.listService.getListItems();
     title = 'Potodo';
     hoverItem: string = "";
+    inputFocused: boolean = false;
+    test(msg: string) {
+        console.log(msg)
+    }
+    handleLabel(status: string) {
+        switch (status) {
+            case "focus":
+                this.inputFocused = true;
+                break
+            case "blur":
+                this.inputFocused = false;
+                break
+        }
+        this.applyVisual();
+    }
+    applyVisual() {
+        const _focused = this.inputFocused;
+        const _empty = this.form.get('task')?.value !== null && this.form.get('task')?.value !== "";
+
+        return {
+            'focused':  _focused || _empty
+        }
+    }
 
     constructor(
         private listService: TimerService,
