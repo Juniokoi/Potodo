@@ -1,2 +1,4 @@
+@import "./styles/theme.scss";
+
 html, body { height: 100%; }
-body { background-color: #1E293B; color: aliceblue; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { background-color: $surface-primary; color: $text-primary; margin: 0; font-family:Inter, Roboto, "Helvetica Neue", sans-serif; }

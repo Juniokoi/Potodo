@@ -1,5 +1,5 @@
 @use "styles/spinner";
-@import "../../../../styles/_base";
+@import "../../../../styles/base";
 
 @mixin _shadow($range, $color) {
     box-shadow: 0 0 $range $color;
@@ -15,10 +15,11 @@
 }
 
 section {
+    $title-height: 70px;
     color: $text-primary;
-    background-color: $surface-primary;
+    background-color: $surface-secondary;
     margin-top: 4rem;
-    min-width: 200px;
+    min-width: 250px;
     padding: 2rem 4rem;
     position: relative;
 
@@ -30,6 +31,37 @@ section {
     border: 4px solid $surface-primary;
     border-radius: 25px;
     box-shadow: 0 4px 30px $surface-primary;
+    .active {
+        color: mediumseagreen;
+    }
+    ul {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        li {
+            margin: 1rem;
+            cursor: pointer;
+        }
+    }
+    .header {
+        margin-bottom: 32px;
+    }
+    .edit, .title {
+        max-height: $title-height;
+    }
+    .edit {
+        display: flex;
+        align-content: center;
+        input[type="text"] {
+            padding: 10px;
+            max-width: 300px;
+            font-size: 1em;
+        }
+        button {
+            min-width: 30px;
+        }
+    }
 
     .title {
         display: grid;
@@ -37,18 +69,18 @@ section {
         grid-template-rows: auto;
         grid-template-areas: ". title edit";
         align-items: center;
+        justify-items: center;
         color: $text-primary;
         gap: 16px;
-        margin-bottom: 32px;
         h3 {
             grid-area: title;
-            place-self: center;
+            place-content: center;
             font-size: 2em;
             height: auto;
             margin: 0;
         }
 
-        .edit {
+        .editButton {
             grid-area: edit;
             mask: url("../../../../../assets/icons/timerScreen/Pencil.svg") no-repeat center;
             $_size: 24px;
