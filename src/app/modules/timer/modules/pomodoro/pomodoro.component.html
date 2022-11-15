@@ -1,9 +1,22 @@
 <section>
-    <div class="title">
-        <h3>
-            {{item.content}}
-        </h3>
-        <div class="edit"></div>
+    <div>
+        <ul >
+            <li (click)="switchTimerMode('focus')" [ngClass]="applyActive('focus')">Hora de focar</li>
+            <li (click)="switchTimerMode('shortPause')" [ngClass]="applyActive('shortPause')">Pausa Curta</li>
+            <li (click)="switchTimerMode('longPause')" [ngClass]="applyActive('longPause')">Pausa Longa</li>
+        </ul>
+    </div>
+    <div class="header" (mouseenter)="mouseActive = true" (mouseleave)="mouseActive = false">
+        <div class="edit" *ngIf="editMode">
+            <input #newName (blur)="loseFocus()" placeholder="Digite o novo título" type="text">
+            <button (click)="saveName(newName.value)">save</button>
+        </div>
+        <div class="title" *ngIf="!editMode">
+            <h3>
+                {{item.content}}
+            </h3>
+            <div *ngIf="!isActive" (click)="editMode = !editMode" class="editButton"></div>
+        </div>
     </div>
 
     <div class="clock">
@@ -14,7 +27,7 @@
     </div>
 
     <input *ngIf="!isActive" class="play" type="button" [value]="started ? 'Voltar' : 'Iniciar'" (click)="startTimer()">
-    <input *ngIf="isActive" class="pause" type="button" value="Pausar" (click)="pauseTimer()">
+    <input *ngIf="isActive && started" class="pause" type="button" value="Pausar" (click)="pauseTimer()">
     <input *ngIf="started" class="stop" type="button" value="Desistir" (click)="stopTimer()">
 
 </section>

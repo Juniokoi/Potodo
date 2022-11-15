@@ -4,6 +4,8 @@ import {Subscription} from "rxjs";
 import {IItem} from "../../../shared/interfaces/IItem";
 import {TimerService} from "../../timer.service";
 import {IDeactivate} from "../../../shared/interfaces/IDeactivate";
+import {IUser} from "../../../shared/interfaces/IUser";
+import {TimerMode} from "../../../shared/interfaces/TimerMode";
 
 @Component({
     selector: 'pomodoro',
@@ -16,6 +18,17 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     sub: Subscription;
     item!: IItem;
 
+    user:IUser = this.service.getUserSettings();
+    private _focusTime =  this.user.timerSetting.focusTimer;
+
+    editMode: boolean = false;
+    mouseActive: boolean = false;
+    currentMode: TimerMode = TimerMode.focus;
+    pomodoroMaxSection: number = 4;
+    pomodoroCurrentSection: number = 0;
+    autoPlay: boolean = this.user.autoPlay;
+    autoPause: boolean = this.user.autoPause;
+
     interval: any;
     isActive: boolean = false;
     started: boolean = false;
@@ -23,10 +36,100 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     percentage: number = 100;
 
     sec: number = 0;
-    minutes: string = "00";
+    minutes: string = this._focusTime.toString()
     extraSeconds: string = "00";
 
-    initial_timer = 0.25;
+    initialTimer = this._focusTime;
+
+    test (e: any) {
+        console.log(e);
+    }
+    checkNextTimerMode() {
+        if (this.currentMode === 'focus') {
+            if (this.pomodoroCurrentSection === this.pomodoroMaxSection) {
+                this.switchTimerMode("longPause")
+                this.pomodoroCurrentSection = 0;
+            } else {
+                this.switchTimerMode("shortPause")
+                this.pomodoroCurrentSection ++;
+            }
+
+            if (this.autoPause) {
+                this.startTimer()
+            }
+
+        } else {
+            this.switchTimerMode("focus")
+            this.pomodoroCurrentSection ++;
+
+            if (this.autoPlay) {
+                this.startTimer()
+            }
+        }
+
+    }
+
+    switchTimerMode(value: string) {
+        if (!this.isActive) {
+
+            // makes sure that when switch Modes, resets the timer
+            this.resetTimerMode();
+            // apply the visual indicator
+            this.applyActive(value);
+
+            switch (value) {
+                case 'focus':
+                    this.currentMode = TimerMode.focus;
+                    break;
+                case 'shortPause':
+                    this.currentMode = TimerMode.shortPause;
+                    break;
+                case 'longPause':
+                    this.currentMode = TimerMode.longPause;
+                    break;
+                default:
+                    throw new Error("Invalid input inserted")
+            }
+
+            this.updateTimerMode(value)
+        }
+    }
+
+    updateTimerMode(value: string) {
+        let newTimer;
+        switch (value) {
+            case 'focus':
+                newTimer =  this.user.timerSetting.focusTimer;
+                break;
+            case 'shortPause':
+                newTimer =  this.user.timerSetting.shortPause;
+                break;
+            case 'longPause':
+                newTimer =  this.user.timerSetting.longPause;
+                break;
+        }
+        if (newTimer) {
+            this.minutes = newTimer.toString()
+            this.initialTimer = newTimer
+        }
+    }
+    applyActive(itemMode: string) {
+        return {
+            'active': itemMode === this.currentMode,
+            'notActive': itemMode !== this.currentMode
+        }
+    }
+    loseFocus() {
+        if (!this.mouseActive){
+            console.log("yay");
+            this.editMode = false;
+        }
+    }
+    saveName(_name: string) {
+        this.item.content = _name;
+        this.updateItem();
+        this.editMode = false;
+    }
 
     constructor(
         private route: ActivatedRoute,
@@ -94,11 +197,20 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         this.minutes = (minutes < 10 ? "0" + minutes : minutes).toString();
         this.extraSeconds = (extraSeconds < 10 ? "0" + extraSeconds : extraSeconds).toString();
     }
-
+    resetTimerMode() {
+        this.sec = 0
+        this.updateTimer()
+        this.extraSeconds = "00";
+        this.updatePercentage(100);
+        this.pauseTimer();
+        this.started = false;
+    }
     resetTimer(): void {
         this.sec = 0;
+        this.extraSeconds = "00";
         this.updateTimer();
         this.updatePercentage(100);
+        this.switchTimerMode("focus")
         this.isActive = false;
         this.started = false;
     }
@@ -118,7 +230,7 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         this.started = true;
         this.updatePercentage(0);
 
-        const total_time = (this.initial_timer * 60) + 1;
+        const total_time = (this.initialTimer * 60) + 1;
         if (this.sec === 0) this.sec = total_time;
 
         this.interval = setInterval(() => {
@@ -136,6 +248,7 @@ export class PomodoroComponent implements OnInit, IDeactivate {
                 this.resetTimer();
                 this.pauseTimer();
                 this.updatePercentage(100);
+                this.checkNextTimerMode();
                 setTimeout(() => {
                     alert("🚨 It is Cool 😎. I wish you could share ");
                 }, 1000);
