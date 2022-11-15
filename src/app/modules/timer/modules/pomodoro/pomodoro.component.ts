@@ -35,15 +35,31 @@ export class PomodoroComponent implements OnInit, IDeactivate {
 
     percentage: number = 100;
 
-    sec: number = 0;
-    minutes: string = this._focusTime.toString()
-    extraSeconds: string = "00";
+    minutes!: string;
+    extraSeconds!: string;
 
-    initialTimer = this._focusTime;
+    initialTimer!: number;
+    sec!: number;
 
-    test (e: any) {
-        console.log(e);
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private service: TimerService
+    ) {
+        this.sub = this.route.data.subscribe(
+            ({tasks}) => {
+                this.item = tasks;
+            }
+        );
+        this.initialTimer = this._focusTime;
+        this.sec = this.initialTimer * 60;
+
+        this.updateTimer()
     }
+
+    ngOnInit(): void {
+    }
+
     checkNextTimerMode() {
         if (this.currentMode === 'focus') {
             if (this.pomodoroCurrentSection === this.pomodoroMaxSection) {
@@ -73,7 +89,6 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         if (!this.isActive) {
 
             // makes sure that when switch Modes, resets the timer
-            this.resetTimerMode();
             // apply the visual indicator
             this.applyActive(value);
 
@@ -96,6 +111,7 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     }
 
     updateTimerMode(value: string) {
+
         let newTimer;
         switch (value) {
             case 'focus':
@@ -112,38 +128,27 @@ export class PomodoroComponent implements OnInit, IDeactivate {
             this.minutes = newTimer.toString()
             this.initialTimer = newTimer
         }
+        this.resetTimerMode();
     }
+
     applyActive(itemMode: string) {
         return {
             'active': itemMode === this.currentMode,
             'notActive': itemMode !== this.currentMode
         }
     }
+
     loseFocus() {
         if (!this.mouseActive){
             console.log("yay");
             this.editMode = false;
         }
     }
-    saveName(_name: string) {
-        this.item.content = _name;
+
+    saveTitle(_title: string) {
+        this.item.content = _title;
         this.updateItem();
         this.editMode = false;
-    }
-
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private service: TimerService
-    ) {
-        this.sub = this.route.data.subscribe(
-            ({tasks}) => {
-                this.item = tasks;
-            }
-        );
-    }
-
-    ngOnInit(): void {
     }
 
     canDeactivate(): boolean {
@@ -192,27 +197,41 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     }
 
     updateTimer(): void {
-        let minutes = Math.floor(this.sec / 60);
-        let extraSeconds = this.sec % 60;
-        this.minutes = (minutes < 10 ? "0" + minutes : minutes).toString();
-        this.extraSeconds = (extraSeconds < 10 ? "0" + extraSeconds : extraSeconds).toString();
+        let _extraSeconds = this.initialTimer * 60 % 60;
+        let _minutes = this.initialTimer;
+
+        function setMinutesVisual(): string {
+            if (_minutes < 1) return "00";
+
+            if (_minutes < 10) return "0" + _minutes;
+
+            return _minutes.toString();
+        }
+
+        function setSecondsVisual(): string {
+            // If user set timer for minor than 1, will transform it into seconds
+            if (_minutes < 1) return "0" + _minutes * 60;
+
+            if (_extraSeconds < 10) return "0" + _extraSeconds;
+
+            return _extraSeconds.toString();
+        }
+
+        this.minutes = setMinutesVisual();
+        this.extraSeconds = setSecondsVisual();
     }
+
     resetTimerMode() {
-        this.sec = 0
         this.updateTimer()
-        this.extraSeconds = "00";
         this.updatePercentage(100);
         this.pauseTimer();
-        this.started = false;
-    }
-    resetTimer(): void {
-        this.sec = 0;
-        this.extraSeconds = "00";
-        this.updateTimer();
-        this.updatePercentage(100);
-        this.switchTimerMode("focus")
         this.isActive = false;
         this.started = false;
+    }
+
+    resetTimer(): void {
+        this.resetTimerMode();
+        this.switchTimerMode("focus")
     }
 
     pauseTimer(): void {
