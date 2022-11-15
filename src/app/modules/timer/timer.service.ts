@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IItem} from "../shared/interfaces/IItem";
+import {IUser} from "../shared/interfaces/IUser";
 
 @Injectable({
     providedIn: 'root'
@@ -7,44 +8,101 @@ import {IItem} from "../shared/interfaces/IItem";
 
 @Injectable()
 export class TimerService {
-
-    items: IItem[] = [];
+    newUser: boolean;
+    user: IUser = {
+        name: "Usuário",
+        items: [],
+        timerSetting: {
+            focusTimer: 25,
+            shortPause: 30,
+            longPause: 5
+        },
+        autoPlay: false,
+        autoPause: false
+    };
 
     constructor() {
+        this.newUser = (localStorage.getItem('userSettings') === null);
+
         if (this.getLS()) {
-            let tempItems = this.getLS();
-            for (let item of tempItems) {
-                this.items = [...this.items,
+            const tempUser: IUser = this.getLS();
+            let tempItems: IItem[] = [];
+
+            for (let _item of tempUser.items) {
+                tempItems = [...tempItems,
                     {
-                        id: item.id,
-                        content: item.content,
-                        complete: item.complete
+                        id: _item.id,
+                        content: _item.content,
+                        complete: _item.complete
                     }
                 ];
             }
+
+            if (this.newUser) {
+                this.createNewUser();
+            } else {
+                this.user = {
+                    name: tempUser.name,
+                    items: tempItems,
+                    timerSetting: {
+                        focusTimer: tempUser.timerSetting.focusTimer,
+                        shortPause: tempUser.timerSetting.shortPause,
+                        longPause: tempUser.timerSetting.longPause
+                    },
+                    autoPlay: tempUser.autoPlay,
+                    autoPause: tempUser.autoPause
+                }
+            }
+            this.updateLS();
         }
     }
 
     getListItems() {
-        return this.items;
+        return this.user.items;
     }
 
     // LS = LocalStorage
     getLS() {
         try {
-            return JSON.parse(localStorage.getItem("items")!);
+            return JSON.parse(localStorage.getItem("userSettings")!);
         } catch (e) {
             console.error(e);
         }
     }
 
     updateLS() {
-        localStorage.setItem("items", JSON.stringify(this.items));
+        localStorage.setItem("userSettings", JSON.stringify(this.user));
+    }
+
+    getUserSettings() {
+        return this.user;
+    }
+
+    updateUser(_user: IUser) {
+        this.user.items = this.getListItems();
+        this.user.timerSetting = _user.timerSetting;
+        this.user.autoPlay = _user.autoPlay;
+        this.user.autoPause = _user.autoPause;
+
+        this.updateLS();
+    }
+    createNewUser() {
+        this.user  =  {
+            name: "Novo Usuário",
+            items: [],
+            timerSetting: {
+                focusTimer: 25,
+                shortPause: 30,
+                longPause: 5
+            },
+            autoPlay: false,
+            autoPause: false
+        };
     }
 
     addItem({task}: { task: string }) {
-        this.items.push({
-            id: this.items.length.toString(),
+        this.user.items.push({
+            id: this.user.items.length.toString(),
             content: task,
             complete: false
         });
@@ -54,7 +112,7 @@ export class TimerService {
 
     getItem(id: string): IItem {
         let tempItem: IItem;
-        this.items.forEach((el, index) => {
+        this.user.items.forEach((el, index) => {
             if (id == el.id)
                 tempItem = el;
 
@@ -64,8 +122,8 @@ export class TimerService {
     }
 
     updateItem(item: IItem) {
-        this.items.forEach((el, index) => {
-            if (item == el) this.items[index] = el;
+        this.user.items.forEach((el, index) => {
+            if (item == el) this.user.items[index] = el;
 
             return -1;
         });
@@ -73,8 +131,8 @@ export class TimerService {
     }
 
     removeItem(item: string) {
-        this.items.forEach((el, index) => {
-            if (item == el.content) this.items.splice(index, 1);
+        this.user.items.forEach((el, index) => {
+            if (item == el.content) this.user.items.splice(index, 1);
             this.updateLS();
         });
     }

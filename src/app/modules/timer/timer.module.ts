@@ -1,19 +1,19 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterLink, RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import {TimerService} from "./timer.service";
 import {TimerRoutingModule} from "./timer-routing.module";
 
-import {TimerComponent} from "./components/timer.component";
-import {ListComponent} from "./components/list/list.component";
-import {PomodoroComponent} from "./components/pomodoro/pomodoro.component";
+import {TimerComponent} from "./timer.component";
+import {ListComponent} from "./modules/list/list.component";
+import {PomodoroComponent} from "./modules/pomodoro/pomodoro.component";
 
 import {ListGuard} from './guards/list.guard';
 import {ListsResolver} from "./guards/lists.resolver";
 import {TimerDeactivateGuard} from "./guards/timer-deactivate.guard";
-import { ConfigComponent } from './components/config/config.component';
+import {ConfigComponent} from './modules/config/config.component';
+import {ConfigResolver} from "./guards/config.resolver";
 
 
 @NgModule({
@@ -21,6 +21,7 @@ import { ConfigComponent } from './components/config/config.component';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
+
         TimerRoutingModule,
     ],
     declarations: [
@@ -29,8 +30,9 @@ import { ConfigComponent } from './components/config/config.component';
         PomodoroComponent,
         ConfigComponent,
     ],
-    providers: [TimerService,ListGuard, ListsResolver, TimerDeactivateGuard]
+    providers: [TimerService, ListGuard, ConfigResolver, ListsResolver, TimerDeactivateGuard],
 
 
 })
-export class TimerModule {}
+export class TimerModule {
+}
