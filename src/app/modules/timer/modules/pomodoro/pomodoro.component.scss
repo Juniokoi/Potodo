@@ -20,7 +20,7 @@ section {
     background-color: $surface-secondary;
     margin-top: 4rem;
     min-width: 250px;
-    padding: 2rem 4rem;
+    padding: 2rem 4rem 0;
     position: relative;
 
     display: flex;
@@ -102,7 +102,7 @@ section {
         position: relative;
         display: inline-grid;
         place-content: center;
-        margin-bottom: 1rem;
+        margin-bottom: 40px;
 
         .timer {
             position: absolute;
@@ -131,33 +131,43 @@ section {
     }
 
     input[type=button] {
-        background-color: transparent;
         border-radius: 5px;
+        width: 120px;
+        height: 40px;
         padding: 0.25em 1em;
         margin-bottom: 1em;
         transition: all 100ms ease-in;
-        color: $text-secondary;
+        font-size: 1.25em;
+        text-align: center;
         font-weight: 500;
 
         &:hover {
-            color: $text-secondary;
             transition-delay: 0ms;
             transform: scale(105%);
         }
     }
 
     .play {
+        background-color: transparent;
+        color: $text-secondary;
         @include _cfgButton($brand-primary);
         &:hover {
-            color: $text-on-tooltip !important;
+            color: $text-on-tooltip;
         }
     }
 
     .pause {
-        @include _cfgButton(#000000);
+        background-color: $brand-primary;
+        color: $text-on-tooltip;
+        border: none;
+        &:hover {
+            color: $text-on-tooltip;
+        }
     }
 
     .stop {
+        color: $text-secondary;
         @include _cfgButton(#ff0000);
+        background-color: transparent;
     }
 }

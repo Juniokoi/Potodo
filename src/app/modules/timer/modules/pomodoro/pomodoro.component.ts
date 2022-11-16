@@ -18,14 +18,15 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     sub: Subscription;
     item!: IItem;
 
-    user:IUser = this.service.getUserSettings();
-    private _focusTime =  this.user.timerSetting.focusTimer;
+    user: IUser = this.service.getUserSettings();
+    private _focusTime = this.user.timerSetting.focusTimer;
 
     editMode: boolean = false;
     mouseActive: boolean = false;
     currentMode: TimerMode = TimerMode.focus;
-    pomodoroMaxSection: number = 4;
-    pomodoroCurrentSection: number = 0;
+    pomodoroMaxSessions: number = 6;
+    pomodoroLongPause: number = 4;
+    pomodoroCurrentSection: number = 1;
     autoPlay: boolean = this.user.autoPlay;
     autoPause: boolean = this.user.autoPause;
 
@@ -38,8 +39,8 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     minutes!: string;
     extraSeconds!: string;
 
-    initialTimer!: number;
     sec!: number;
+    initSec: number;
 
     constructor(
         private route: ActivatedRoute,
@@ -51,10 +52,10 @@ export class PomodoroComponent implements OnInit, IDeactivate {
                 this.item = tasks;
             }
         );
-        this.initialTimer = this._focusTime;
-        this.sec = this.initialTimer * 60;
 
-        this.updateTimer()
+        this.initSec = this.sec = (this._focusTime * 60);
+
+        this.updateTimer();
     }
 
     ngOnInit(): void {
@@ -62,84 +63,67 @@ export class PomodoroComponent implements OnInit, IDeactivate {
 
     checkNextTimerMode() {
         if (this.currentMode === 'focus') {
-            if (this.pomodoroCurrentSection === this.pomodoroMaxSection) {
-                this.switchTimerMode("longPause")
-                this.pomodoroCurrentSection = 0;
+            this.pomodoroCurrentSection++;
+
+            if (this.pomodoroLongPause > this.pomodoroCurrentSection) {
+                this.switchTimerMode('shortPause');
             } else {
-                this.switchTimerMode("shortPause")
-                this.pomodoroCurrentSection ++;
+                this.switchTimerMode('longPause');
+                this.pomodoroCurrentSection = 0;
             }
 
             if (this.autoPause) {
-                this.startTimer()
+                this.startTimer();
             }
 
         } else {
-            this.switchTimerMode("focus")
-            this.pomodoroCurrentSection ++;
+            this.switchTimerMode('focus');
 
             if (this.autoPlay) {
-                this.startTimer()
+                this.startTimer();
             }
         }
-
+        console.log(this.pomodoroLongPause, this.pomodoroCurrentSection);
     }
 
-    switchTimerMode(value: string) {
-        if (!this.isActive) {
-
-            // makes sure that when switch Modes, resets the timer
-            // apply the visual indicator
-            this.applyActive(value);
-
-            switch (value) {
-                case 'focus':
-                    this.currentMode = TimerMode.focus;
-                    break;
-                case 'shortPause':
-                    this.currentMode = TimerMode.shortPause;
-                    break;
-                case 'longPause':
-                    this.currentMode = TimerMode.longPause;
-                    break;
-                default:
-                    throw new Error("Invalid input inserted")
-            }
-
-            this.updateTimerMode(value)
-        }
-    }
-
-    updateTimerMode(value: string) {
-
-        let newTimer;
-        switch (value) {
-            case 'focus':
-                newTimer =  this.user.timerSetting.focusTimer;
-                break;
-            case 'shortPause':
-                newTimer =  this.user.timerSetting.shortPause;
-                break;
-            case 'longPause':
-                newTimer =  this.user.timerSetting.longPause;
-                break;
-        }
-        if (newTimer) {
-            this.minutes = newTimer.toString()
-            this.initialTimer = newTimer
-        }
-        this.resetTimerMode();
-    }
-
-    applyActive(itemMode: string) {
+    applyTimerStyles(itemMode: string) {
         return {
             'active': itemMode === this.currentMode,
             'notActive': itemMode !== this.currentMode
+        };
+    }
+
+    switchTimerMode(value: string) {
+        const {focusTimer, shortPause, longPause} = this.user.timerSetting;
+        switch (value) {
+            case 'focus':
+                this.currentMode = TimerMode.focus;
+                this.applyTimerStyles('focus');
+                this.setSec(focusTimer);
+                break;
+            case 'shortPause':
+                this.currentMode = TimerMode.shortPause;
+                this.applyTimerStyles('shortPause');
+                this.setSec(shortPause);
+                break;
+            case 'longPause':
+                this.currentMode = TimerMode.longPause;
+                this.applyTimerStyles('longPause');
+                this.setSec(longPause);
+                break;
+            default:
+                throw new Error("Invalid input inserted");
         }
+        this.updateTimer();
+    }
+
+    onClickChangeMode(value: string) {
+        this.switchTimerMode(value);
+        this.resetTimer();
     }
 
     loseFocus() {
-        if (!this.mouseActive){
+        if (!this.mouseActive) {
             console.log("yay");
             this.editMode = false;
         }
@@ -179,6 +163,10 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         return true;
     }
 
+    setSec(val: number) {
+        this.initSec = this.sec = val * 60;
+    }
+
     updatePercentage(percentage?: number): void {
         if (percentage) {
             this.percentage = percentage;
@@ -186,8 +174,8 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         document.documentElement.style.setProperty('--percentage', this.percentage.toString());
     }
 
-    calcPercentage(total: number, spent: number): number {
-        const percentage = ((total - spent) / total) * 100;
+    calcPercentage(spent: number): number {
+        const percentage = ((this.initSec - spent) / this.initSec) * 100;
         this.updatePercentage(percentage);
         return percentage;
     }
@@ -197,23 +185,16 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     }
 
     updateTimer(): void {
-        let _extraSeconds = this.initialTimer * 60 % 60;
-        let _minutes = this.initialTimer;
+        let _extraSeconds = this.sec % 60;
+        let _minutes = Math.floor(this.sec / 60);
 
         function setMinutesVisual(): string {
-            if (_minutes < 1) return "00";
-
             if (_minutes < 10) return "0" + _minutes;
-
             return _minutes.toString();
         }
 
         function setSecondsVisual(): string {
-            // If user set timer for minor than 1, will transform it into seconds
-            if (_minutes < 1) return "0" + _minutes * 60;
-
             if (_extraSeconds < 10) return "0" + _extraSeconds;
-
             return _extraSeconds.toString();
         }
 
@@ -221,17 +202,12 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         this.extraSeconds = setSecondsVisual();
     }
 
-    resetTimerMode() {
-        this.updateTimer()
-        this.updatePercentage(100);
-        this.pauseTimer();
-        this.isActive = false;
-        this.started = false;
-    }
-
     resetTimer(): void {
-        this.resetTimerMode();
-        this.switchTimerMode("focus")
+        this.started = false;
+
+        this.pauseTimer();
+        this.updateTimer();
+        this.updatePercentage(100);
     }
 
     pauseTimer(): void {
@@ -246,38 +222,31 @@ export class PomodoroComponent implements OnInit, IDeactivate {
 
     startTimer(): void {
         this.isActive = true;
-        this.started = true;
-        this.updatePercentage(0);
 
-        const total_time = (this.initialTimer * 60) + 1;
-        if (this.sec === 0) this.sec = total_time;
+        if (!this.started) {
+            this.started = true;
+            this.updatePercentage(0);
+        }
 
         this.interval = setInterval(() => {
             this.sec--;
 
-            this.percentage = this.calcPercentage(total_time, this.sec);
+            this.percentage = this.calcPercentage(this.sec);
             this.updateTimer();
 
             // When times ends, shouts an alert
             if (this.percentage === 100) {
-                this.isActive = false;
                 this.item.complete = true;
-                clearInterval(this.interval);
                 this.updateItem();
-                this.resetTimer();
-                this.pauseTimer();
+                this.stopTimer();
                 this.updatePercentage(100);
                 this.checkNextTimerMode();
-                setTimeout(() => {
-                    alert("🚨 It is Cool 😎. I wish you could share ");
-                }, 1000);
+                console.log("🚨 It is Cool 😎. I wish you could share ");
             }
         }, 1000);
     }
 
-
     ngOnDestroy() {
         this.sub.unsubscribe();
     }
-
 }

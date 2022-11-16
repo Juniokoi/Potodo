@@ -25,9 +25,18 @@
     
     <div>
         <ul >
-            <li (click)="switchTimerMode('focus')" [ngClass]="applyActive('focus')">Hora de focar</li>
-            <li (click)="switchTimerMode('shortPause')" [ngClass]="applyActive('shortPause')">Pausa Curta</li>
-            <li (click)="switchTimerMode('longPause')" [ngClass]="applyActive('longPause')">Pausa Longa</li>
+            <li (click)="onClickChangeMode('focus')"
+                [ngClass]="applyTimerStyles('focus')">
+                Hora de focar
+            </li>
+            
+            <li (click)="onClickChangeMode('shortPause')"
+                [ngClass]="applyTimerStyles('shortPause')">
+                Pausa Curta</li>
+            
+            <li (click)="onClickChangeMode('longPause')"
+                [ngClass]="applyTimerStyles('longPause')">
+                Pausa Longa</li>
         </ul>
     </div>
 
