@@ -11,8 +11,9 @@ import { IItem } from '../../../shared/interfaces/IItem';
 export class ListComponent implements OnInit {
     form: FormGroup;
     items: IItem[] = this.listService.getListItems();
-    title = 'Potodo';
+    inputFocused: boolean = false;
     hoverItem: string = "";
+
 
     constructor(
         private listService: TimerService,
@@ -24,16 +25,45 @@ export class ListComponent implements OnInit {
                 Validators.maxLength(256)]]
         });
     }
+
     ngOnInit(): void {
+    }
+
+    handleLabel(status: string): void {
+        switch (status) {
+            case "focus":
+                this.inputFocused = true;
+                break
+            case "blur":
+                this.inputFocused = false;
+                break
+        }
+        this.applyVisual();
+    }
+
+    applyVisual() {
+        const _focused = this.inputFocused;
+        const _empty = this.form.get('task')?.value !== null && this.form.get('task')?.value !== "";
+
+        return {
+            'focused':  _focused || _empty
+        }
     }
 
     removeTask(task: string) {
         this.listService.removeItem(task);
     }
 
+    checkTask(id: string, content: boolean) {
+        let _temp = this.listService.getItem(id);
+        _temp.complete = content;
+        this.listService.checkItem(id, _temp.complete)
+    }
+
     isValid() {
         return this.form.get('task')!.valid
     }
+
     addTask() {
         if (this.form.valid) {
             this.listService.addItem(this.form.value);

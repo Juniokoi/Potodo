@@ -24,8 +24,8 @@ export class TimerService {
     constructor() {
         this.newUser = (localStorage.getItem('userSettings') === null);
 
-        if (this.getLS()) {
-            const tempUser: IUser = this.getLS();
+        if (this.getLocalStorage()) {
+            const tempUser: IUser = this.getLocalStorage();
             let tempItems: IItem[] = [];
 
             for (let _item of tempUser.items) {
@@ -53,7 +53,7 @@ export class TimerService {
                     autoPause: tempUser.autoPause
                 }
             }
-            this.updateLS();
+            this.updateLocalStorage();
         }
     }
 
@@ -62,7 +62,7 @@ export class TimerService {
     }
 
     // LS = LocalStorage
-    getLS() {
+    getLocalStorage() {
         try {
             return JSON.parse(localStorage.getItem("userSettings")!);
         } catch (e) {
@@ -70,7 +70,7 @@ export class TimerService {
         }
     }
 
-    updateLS() {
+    updateLocalStorage() {
         localStorage.setItem("userSettings", JSON.stringify(this.user));
     }
 
@@ -84,12 +84,17 @@ export class TimerService {
         this.user.autoPlay = _user.autoPlay;
         this.user.autoPause = _user.autoPause;
 
-        this.updateLS();
+        this.updateLocalStorage();
     }
+
     createNewUser() {
         this.user  =  {
             name: "Novo Usuário",
-            items: [],
+            items: [
+                {id: "0", content: "Revisar as anotações da aula", complete: false},
+                {id: "1", content: "Terminar o trabalho", complete: false},
+                {id: "2", content: "Arrumar o quarto", complete: true}
+            ],
             timerSetting: {
                 focusTimer: 25,
                 shortPause: 30,
@@ -107,7 +112,7 @@ export class TimerService {
             complete: false
         });
 
-        this.updateLS();
+        this.updateLocalStorage();
     }
 
     getItem(id: string): IItem {
@@ -124,16 +129,23 @@ export class TimerService {
     updateItem(item: IItem) {
         this.user.items.forEach((el, index) => {
             if (item == el) this.user.items[index] = el;
-
             return -1;
         });
-        this.updateLS();
+        this.updateLocalStorage();
+    }
+
+    checkItem(id: string, value: boolean) {
+        this.user.items.forEach((el, index) => {
+            if (id == el.id) this.user.items[index].complete = value
+            this.updateLocalStorage();
+        });
+
     }
 
     removeItem(item: string) {
         this.user.items.forEach((el, index) => {
             if (item == el.content) this.user.items.splice(index, 1);
-            this.updateLS();
+            this.updateLocalStorage();
         });
     }
 }

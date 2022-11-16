@@ -1,32 +1,115 @@
 @import "../../../../styles/base";
 
-section {
-    min-width: 250px;
-    background-color: $brand-secondary;
-    color: black;
-    width: fit-content;
-    height: 50px;
-    padding: 0.75em;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px $shadow;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+$margin_top: 150px;
 
 .list-body {
-    background-color: $surface-primary;
+    position: relative;
+    background-color: $surface-secondary;
     min-width: 30vw;
-    margin: 3em; padding: 2rem;
-    border: 4px solid $surface_primary; border-radius: 15px; box-shadow: 0 2px 15px #{$brand-secondary}30;
+
+    margin: $margin_top 3em 3em; padding: 2rem;
+    border: 4px solid $surface_primary; border-radius: 15px; box-shadow: 0 6px 15px #{$brand-primary}30;
     ul {
         list-style: none;
         padding: 0;
 
         li {
             margin-bottom: 1em;
+            .item {
+                min-width: 250px;
+                background-color: $brand-secondary;
+                color: black;
+                width: 80%;
+                height: 50px;
+                padding: 0.75em;
+                border-radius: 10px;
+                box-shadow: 0 4px 16px $surface-primary;
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                span {
+                    transition: all 300ms ease-in;
+                    font-size: 1.25em;
+                    font-weight: 500;
+                }
+            }
         }
+    }
+}
+.options {
+    display: flex;
+    align-content: center;
+    justify-items: center;
+}
+.delete, .openTimer {
+    position: relative;
+    $size: 32px;
+    width: $size;
+    height: $size;
+    cursor: pointer;
+    margin: 0 4px;
+    transition: transform 50ms ease-in-out;
+    padding: 4px;
+    &:hover {
+        transform: scale(110%);
+    }
+}
+.delete {
+    background-color: #b73300;
+    mask: url("/assets/icons/timer/Trash.svg");
+}
+.openTimer {
+    background-color: $text-on-tooltip;
+    mask: url("/assets/icons/timer/SquareOut.svg");
+}
+.checked {
+    text-decoration: line-through;
+    filter: opacity(70%);
+}
+h1 {
+    position: absolute;
+    top: -80px;
+    font-size: 2em;
+}
+
+input[type = "checkbox"] {
+    $size: 20px;
+    position: relative;
+    margin-right:calc($size + $size/2);
+
+    &:before, &:after {
+        position: absolute;
+        content: "";
+        width: $size;
+        height: $size;
+        inset: 0;
+        transform: translateY( -4px);
+    }
+    &:before {
+        background-color: #2B2841;
+        border-radius: 5px;
+        box-shadow: 0 0 4px $shadow;
+    }
+    &:after {
+        mask: url("/assets/icons/timer/Check.svg");
+        transform: scale(0%);
+        transition: transform 200ms ease-in-out;
+    }
+    &:checked:before {
+        background-color: #2B2841;
+        border-radius: 5px;
+        box-shadow: 0 2px 8px $shadow;
+    }
+    &:checked:after {
+        top: -2px;
+        $size: 18px;
+        width: $size;
+        height: $size;
+        background-color: white;
+        mask: url("/assets/icons/timer/Check.svg");
+        transform: scale(100%);
     }
 }
 
@@ -36,6 +119,7 @@ form {
     display: flex;
     align-items: center;
     gap: 1rem;
+
     button {
         border: 2px solid $surface-primary;
         display: flex;
@@ -52,11 +136,13 @@ form {
         filter: opacity(100%);
         box-shadow: 0 2px 20px #{$brand-secondary}30;
         transform: scale(110%);
+        cursor: pointer;
     }
     ._disabled {
         filter: opacity(30%);
     }
 }
+
 .input {
     position: relative;
     border: 2px solid black;
@@ -64,11 +150,13 @@ form {
 
     & > * {
         height: 24px;
-        padding: 20px;
+        padding: 15px;
+        cursor: text;
     }
 
     input {
-        transition: all 100ms ease-in-out;
+        transition: all 100ms ease-in;
+        font-size: 1em;
     }
 
     label {
@@ -77,5 +165,13 @@ form {
         height: auto;
         color: black;
         left: 0;
+        user-select: none;
+        transition: all 100ms ease-in-out 100ms;
+    }
+
+    .focused {
+        transform: scale(90%) translateY(-15px) translateX(-15px);
+        transition-delay: 0ms;
+        filter: opacity(80%);
     }
 }
