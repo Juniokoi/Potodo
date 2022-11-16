@@ -129,6 +129,8 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         }
     }
 
+    //TODO: Block action if _title is empty
+    // And warn user
     saveTitle(_title: string) {
         this.item.content = _title;
         this.updateItem();

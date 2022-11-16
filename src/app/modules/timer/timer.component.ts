@@ -6,6 +6,7 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./timer.component.scss']
 })
 export class TimerComponent implements OnInit {
+    //TODO: Make method to redirect user to the last active route
     hasTimer = true;
     currentId = 0
 

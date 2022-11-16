@@ -1,6 +1,7 @@
 <div class="list-body">
     <h1>Minha lista</h1>
     <ul>
+<!-- Todo: Fix hover actions -->
         <li *ngFor="let item of items">
             <div class="item"
                  (mouseenter)="hoverItem = item.id"
@@ -39,7 +40,12 @@
         </li>
     </ul>
 
-    <form class="form" [formGroup]="form" (ngSubmit)="addTask()">
+<!-- Todo: Make this form a new component to be activated when clicked on one button -->
+    <form class="form"
+          [formGroup]="form"
+          (ngSubmit)="addTask()"
+    >
+ 
         <div class="input">
 
             <input (focus)="handleLabel('focus')"
