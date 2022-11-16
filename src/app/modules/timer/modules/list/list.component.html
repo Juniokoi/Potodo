@@ -2,14 +2,38 @@
     <h1>Minha lista</h1>
     <ul>
         <li *ngFor="let item of items">
-            <div class="item" (mouseenter)="hoverItem = item.id" (mouseleave)="hoverItem = ''">
+            <div class="item"
+                 (mouseenter)="hoverItem = item.id"
+                 (mouseleave)="hoverItem = ''">
+                
                 <div class="content">
-                     <input class="checkbox" (click)="checkTask(item.id,  !item.complete)" name="check" type="checkbox" [checked]="item.complete">
-                    <span [ngClass]="{'checked': item.complete}">{{item.content}}</span>
+                     <input class="checkbox"
+                            (click)="checkTask(item.id,  !item.complete)"
+                            name="check"
+                            type="checkbox"
+                            [checked]="item.complete"
+                     >
+                    
+                    <span [ngClass]="{'checked': item.complete}">
+                        {{item.content}}
+                    </span>
                 </div>
-                <div [hidden]="hoverItem != item.id" class="options">
-                    <input class="delete" (click)="removeTask(item.content)" type="button" aria-label="Deletar item">
-                    <input class="openTimer" [routerLink]="['/timer/',item.id]" type="button" aria-label="Entrar no temporizador">
+ 
+                <div class="options"
+                     [hidden]="hoverItem != item.id">
+ 
+                    <input class="delete"
+                           (click)="removeTask(item.content)"
+                           type="button"
+                           aria-label="Deletar item"
+                    >
+ 
+                    <input class="openTimer"
+                           [routerLink]="['/timer/',item.id]"
+                           type="button"
+                           aria-label="Entrar no temporizador"
+                    >
+
                 </div>
             </div>
         </li>
@@ -23,12 +47,18 @@
                    autocomplete="off"
                    formControlName="task"
                    type="text"
-                   id="floatingInput">
-
-            <label [ngClass]="applyVisual()" for="floatingInput">Adicionar tarefa</label>
+                   id="floatingInput"
+            >
+            <label [ngClass]="applyVisual()"
+                   for="floatingInput">
+                Adicionar tarefa
+            </label>
+            
         </div>
 
-        <button (click)="addTask()" [class]="isValid() ? '_valid' : '_disabled'" [disabled]="!isValid()">
+        <button [class]="isValid() ? '_valid' : '_disabled'"
+                (click)="addTask()"
+                [disabled]="!isValid()">
             +
         </button>
     </form>
