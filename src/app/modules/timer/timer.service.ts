@@ -90,7 +90,11 @@ export class TimerService {
     createNewUser() {
         this.user  =  {
             name: "Novo Usuário",
-            items: [],
+            items: [
+                {id: "0", content: "Revisar as anotações da aula", complete: false},
+                {id: "1", content: "Terminar o trabalho", complete: false},
+                {id: "2", content: "Arrumar o quarto", complete: true}
+            ],
             timerSetting: {
                 focusTimer: 25,
                 shortPause: 30,
