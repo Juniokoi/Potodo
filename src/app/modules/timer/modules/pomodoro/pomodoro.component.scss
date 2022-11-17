@@ -1,5 +1,5 @@
 @use "styles/spinner";
-@import "../../../../styles/base";
+@import "base";
 
 @mixin _shadow($range, $color) {
     box-shadow: 0 0 $range $color;
