@@ -28,8 +28,13 @@
                             "src/assets/favicon.ico"
                         ],
                         "styles": [
-                            "src/app/styles.scss"
+                            "src/styles.scss"
                         ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "src/styles"
+                            ]
+                        },
                         "scripts": []
                     },
                     "configurations": {
@@ -75,7 +80,7 @@
                             "browserTarget": "potodo:build:development"
                         }
                     },
-                    "defaultConfiguration": "development"
+                    "defaultConfiguration": "development",
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -96,8 +101,13 @@
                             "src/assets/favicon.ico"
                         ],
                         "styles": [
-                            "src/app/styles.scss"
+                            "src/styles.scss"
                         ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "src/styles"
+                            ]
+                        },
                         "scripts": []
                     }
                 }
