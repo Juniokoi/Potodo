@@ -1,0 +1,123 @@
+@import 'base';
+
+$fg: #{$text-primary}22;
+$bg: $crust;
+
+@mixin border($size, $color) {
+    border-left: $size+px solid transparent;
+    border-right: $size+px solid transparent;
+    border-bottom: $size+px solid $color;
+    left: calc(50% - #{$size}px);
+}
+
+.tooltip {
+    position: fixed;
+    opacity: 0;
+    background-color: $bg;
+    color: $text-primary;
+    border-radius: 4px;
+    padding: 10px 10px;
+    font-size: 13px;
+    z-index: 5;
+    border: 1px solid $fg;
+    max-width: 100px;
+    text-align: center;
+    box-shadow: 0 4px 15px #{$bg}aa;
+
+    &::before, &::after {
+        content: '';
+        width: 0;
+        height: 0;
+        position: absolute;
+    }
+
+}
+
+.below {
+    transform: translateX(-50%);
+    margin-top: 7px;
+
+    &::before {
+        @include border(6, $fg);
+        top: -6px;
+        z-index: 3;
+    }
+    &::after {
+        @include border(5, $bg);
+        top: -5px;
+        z-index: 6;
+    }
+}
+
+.above {
+    transform: translate(-50%, -100%);
+    margin-bottom: 7px;
+
+    &::before, &::after {
+        bottom: -7px;
+    }
+    &::before {
+        @include border(6, $fg);
+        z-index: 3;
+    }
+    &::after {
+        @include border(5, $bg);
+        z-index: 6;
+    }
+}
+
+.left {
+    transform:translate(calc(-100% - 7px), -50%);
+
+    &::before {
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-right: none;
+        right: -5px;
+        top: calc(50% - 5px);
+    }
+}
+
+.right {
+    transform:translateY(-50%);
+    margin-left: 7px;
+
+    &::before {
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-left: none;
+        left: -5px;
+        top: calc(50% - 5px);
+    }
+}
+
+.dynamic {
+    margin-left: 20px;
+
+    &::before {
+        display: none;
+    }
+}
+
+.visible {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+.light {
+    background-color: $bg;
+    color: $text-primary;
+
+    &::before {
+        border: 5px solid $fg;
+    }
+}
+
+.dark {
+    background-color: $bg;
+    color: $text-primary;
+
+    &::before {
+        border: 5px solid $fg;
+    }
+}
