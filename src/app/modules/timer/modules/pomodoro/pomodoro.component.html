@@ -8,15 +8,30 @@
             class="edit"
             *ngIf="editMode">
  
-            <input #newName
+            <input
                    (blur)="loseFocus()"
                    placeholder="Digite o novo título"
+                   min="2"
+                   max="100"
+                   name="name"
+                   #name
                    type="text">
             
-            <button
-                (click)="saveTitle(newName.value)">
+            <button *ngIf="!activeToolbar"
+                (click)="this.saveTitle(name.value)">
                 save
             </button>
+ 
+            <button
+                *ngIf="activeToolbar"
+                [tooltipAlways]="true"
+                [hideDelay]="3000"
+                [tooltip]="'O título precisa ter 3 ou mais caracteres'"
+                (click)="this.saveTitle(name.value)">
+                save
+            </button>
+            <div
+            ></div>
  
         </div>
         <div
