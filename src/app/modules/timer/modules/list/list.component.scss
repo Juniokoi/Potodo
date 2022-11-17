@@ -1,3 +1,4 @@
+@use "styles/checkbox";
 @import "base";
 
 $margin_top: 150px;
@@ -76,22 +77,27 @@ $margin_top: 150px;
 
     &__icon {
         $size: 32px;
-        width: $size; height: $size;
+        width: $size;
+        height: $size;
     }
 }
 
 .delete {
     background-color: #dc798b;
+
     & .--trash {
         background-color: #4d0404;
         mask: url("/assets/icons/timer/Trash.svg") center no-repeat;
+
         &:hover {
             background-color: #2d0000;
         }
     }
 }
+
 .pomodoro {
     background-color: #adebb6;
+
     & .--redirect {
         background-color: $text-on-tooltip;
         mask: url("/assets/icons/timer/SquareOut.svg") center no-repeat;
@@ -110,110 +116,24 @@ h1 {
     font-size: 2em;
 }
 
-input[type = "checkbox"] {
-    $size: 20px;
-    position: relative;
-    margin-right: calc($size + $size / 2);
+.add-item {
+    position: absolute;
+    transition: scale 100ms ease-in-out;
 
-    &:before, &:after {
-        position: absolute;
-        content: "";
-        width: $size;
-        height: $size;
-        inset: 0;
-        transform: translateY(-4px);
-    }
-
-    &:before {
-        background-color: #2B2841;
-        border-radius: 5px;
-        box-shadow: 0 0 4px $shadow;
-    }
-
-    &:after {
-        mask: url("/assets/icons/timer/Check.svg");
-        transform: scale(0%);
-        transition: transform 200ms ease-in-out;
-    }
-
-    &:checked:before {
-        background-color: #2B2841;
-        border-radius: 5px;
-        box-shadow: 0 2px 8px $shadow;
-    }
-
-    &:checked:after {
-        top: -2px;
-        $size: 18px;
-        width: $size;
-        height: $size;
-        background-color: white;
-        mask: url("/assets/icons/timer/Check.svg");
-        transform: scale(100%);
-    }
-}
-
-form {
-    position: relative;
-    top: 4em;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    button {
-        border: 2px solid $surface-primary;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    &--button {
+        bottom: -40px;
+        height: 60px;
+        width: 300px;
         border-radius: 10px;
-        height: 35px;
-        width: 40px;
-        font-size: 32px;
-        background-color: $brand-primary;
-        transition: all 100ms ease-in;
-    }
-
-    ._valid {
-        filter: opacity(100%);
-        box-shadow: 0 2px 20px #{$brand-secondary}30;
-        transform: scale(110%);
+        border-style: dashed;
+        background-color: $surface-secondary;
+        border-color: $brand-primary;
+        color: $text-primary;
+        font-size: 1.2em;
         cursor: pointer;
-    }
 
-    ._disabled {
-        filter: opacity(30%);
-    }
-}
-
-.input {
-    position: relative;
-    border: 2px solid black;
-    border-radius: 8px;
-
-    & > * {
-        height: 24px;
-        padding: 15px;
-        cursor: text;
-    }
-
-    input {
-        transition: all 100ms ease-in;
-        font-size: 1em;
-    }
-
-    label {
-        position: absolute;
-        width: 200px;
-        height: auto;
-        color: black;
-        left: 0;
-        user-select: none;
-        transition: all 100ms ease-in-out 100ms;
-    }
-
-    .focused {
-        transform: scale(90%) translateY(-15px) translateX(-15px);
-        transition-delay: 0ms;
-        filter: opacity(80%);
+        &:hover {
+            scale: 110%;
+        }
     }
 }

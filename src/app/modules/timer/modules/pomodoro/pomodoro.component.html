@@ -48,6 +48,13 @@
             </div>
         </div>
     </div>
+    <div *ngIf="pomodoroCurrentSection <= pomodoroMaxSessions">
+        <p>Sessão</p>
+        <p>{{pomodoroCurrentSection}} de {{pomodoroMaxSessions}}</p>
+    </div>
+    <div  *ngIf="pomodoroCurrentSection > pomodoroMaxSessions">
+        <p>Item finalizado! Parabéns ✨</p>
+    </div>
 
     <div class="clock">
         <div class="timer">

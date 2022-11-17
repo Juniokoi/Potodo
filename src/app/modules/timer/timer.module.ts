@@ -16,6 +16,9 @@ import {ConfigComponent} from './modules/config/config.component';
 import {ConfigResolver} from "./guards/config.resolver";
 import {TooltipComponent} from '../shared/ui/tooltip/tooltip.component';
 import {TooltipDirective} from '../shared/ui/tooltip/tooltip.directive';
+import {AddItemComponent} from './modules/list/components/add-item/add-item.component';
+import {DynamicService} from "./modules/list/components/services/dynamic.service";
+import {CustomAutoFocus} from "../shared/directives/auto-focus.directive";
 
 
 @NgModule({
@@ -32,10 +35,11 @@ import {TooltipDirective} from '../shared/ui/tooltip/tooltip.directive';
         PomodoroComponent,
         ConfigComponent,
         TooltipDirective,
-        TooltipComponent
+        TooltipComponent,
+        AddItemComponent,
+        CustomAutoFocus
     ],
-    providers: [TimerService, ListGuard, ConfigResolver, ListsResolver, TimerDeactivateGuard],
-
+    providers: [TimerService, DynamicService, ListGuard, ConfigResolver, ListsResolver, TimerDeactivateGuard],
 
 })
 export class TimerModule {

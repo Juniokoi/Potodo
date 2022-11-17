@@ -1,0 +1,44 @@
+@import 'src/styles/_base.scss';
+
+input[type = "checkbox"] {
+    $size: 20px;
+    position: relative;
+    margin-right: calc($size + $size / 2);
+
+    &:before, &:after {
+        position: absolute;
+        content: "";
+        width: $size;
+        height: $size;
+        inset: 0;
+        transform: translateY(-4px);
+    }
+
+    &:before {
+        background-color: #2B2841;
+        border-radius: 5px;
+        box-shadow: 0 0 4px $shadow;
+    }
+
+    &:after {
+        mask: url("/assets/icons/timer/Check.svg");
+        transform: scale(0%);
+        transition: transform 200ms ease-in-out;
+    }
+
+    &:checked:before {
+        background-color: #2B2841;
+        border-radius: 5px;
+        box-shadow: 0 2px 8px $shadow;
+    }
+
+    &:checked:after {
+        top: -2px;
+        $size: 18px;
+        width: $size;
+        height: $size;
+        background-color: white;
+        mask: url("/assets/icons/timer/Check.svg");
+        transform: scale(100%);
+    }
+}
