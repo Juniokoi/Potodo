@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {IItem} from "../shared/interfaces/IItem";
 import {IUser} from "../shared/interfaces/IUser";
-import {Observable, Subject, Subscriber} from "rxjs";
+import {Subject} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -12,9 +12,8 @@ export class TimerService {
 
     // Route handler for timer navbar
     private _activeRoute!: string;
-    route$ = new Subject<string>()
+    route$ = new Subject<string>();
 
-    newUser: boolean;
     user: IUser = {
         name: "Usuário",
         items: [],
@@ -30,41 +29,8 @@ export class TimerService {
     constructor() {
         this.route$.subscribe({
             next: (_route) => this._activeRoute = _route
-        })
-
-        this.newUser = (localStorage.getItem('userSettings') === null);
-
-        if (this.getLocalStorage()) {
-            const tempUser: IUser = this.getLocalStorage();
-            let tempItems: IItem[] = [];
-
-            for (let _item of tempUser.items) {
-                tempItems = [...tempItems,
-                    {
-                        id: _item.id,
-                        content: _item.content,
-                        complete: _item.complete
-                    }
-                ];
-            }
-
-            if (this.newUser) {
-                this.createNewUser();
-            } else {
-                this.user = {
-                    name: tempUser.name,
-                    items: tempItems,
-                    timerSetting: {
-                        focusTimer: tempUser.timerSetting.focusTimer,
-                        shortPause: tempUser.timerSetting.shortPause,
-                        longPause: tempUser.timerSetting.longPause
-                    },
-                    autoPlay: tempUser.autoPlay,
-                    autoPause: tempUser.autoPause
-                }
-            }
-            this.updateLocalStorage();
-        }
+        });
+        this.checkUser();
     }
 
     getListItems() {
@@ -97,8 +63,44 @@ export class TimerService {
         this.updateLocalStorage();
     }
 
+    checkUser() {
+        const newUser = (localStorage.getItem('userSettings') === null);
+
+        if (newUser) {
+            this.createNewUser();
+            this.updateLocalStorage();
+        } else {
+
+            const tempUser: IUser = this.getLocalStorage();
+            let tempItems: IItem[] = [];
+
+            for (let _item of tempUser.items) {
+                tempItems = [...tempItems,
+                    {
+                        id: _item.id,
+                        content: _item.content,
+                        complete: _item.complete
+                    }
+                ];
+            }
+
+            this.user = {
+                name: tempUser.name,
+                items: tempItems,
+                timerSetting: {
+                    focusTimer: tempUser.timerSetting.focusTimer,
+                    shortPause: tempUser.timerSetting.shortPause,
+                    longPause: tempUser.timerSetting.longPause
+                },
+                autoPlay: tempUser.autoPlay,
+                autoPause: tempUser.autoPause
+            };
+            this.updateLocalStorage();
+        }
+    }
+
     createNewUser() {
-        this.user  =  {
+        this.user = {
             name: "Novo Usuário",
             items: [
                 {id: "0", content: "Revisar as anotações da aula", complete: false},
@@ -146,7 +148,7 @@ export class TimerService {
 
     checkItem(id: string, value: boolean) {
         this.user.items.forEach((el, index) => {
-            if (id == el.id) this.user.items[index].complete = value
+            if (id == el.id) this.user.items[index].complete = value;
             this.updateLocalStorage();
         });
 
@@ -161,13 +163,5 @@ export class TimerService {
 
     getRoute() {
         return this._activeRoute;
-    }
-
-    setRoute(value: string):void {
-        this._activeRoute = value;
-    }
-
-    resetRoute():void {
-        this._activeRoute = "";
     }
 }
