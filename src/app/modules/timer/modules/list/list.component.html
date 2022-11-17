@@ -1,11 +1,15 @@
 <div class="list-body">
-    <h1>Minha lista</h1>
+    <h1
+        [tooltipPosition]="tooltipPosition"
+        [tooltip]="'Ir para o temporizador'"
+    >Minha lista</h1>
     <ul>
-<!-- Todo: Fix hover actions -->
-        <li *ngFor="let item of items">
+        <li *ngFor="let item of items"
+           (mouseenter)="hoverItem = item.id"
+           (mouseleave)="hoverItem = ''" >
+            
             <div class="item"
-                 (mouseenter)="hoverItem = item.id"
-                 (mouseleave)="hoverItem = ''">
+                 >
                 
                 <div class="content">
                      <input class="checkbox"
@@ -21,19 +25,31 @@
                 </div>
  
                 <div class="options"
-                     [hidden]="hoverItem != item.id">
+                     >
  
-                    <input class="delete"
+                    <button class="delete"
                            (click)="removeTask(item.content)"
                            type="button"
                            aria-label="Deletar item"
+                            [tooltip]="'Deletar item'"
+                            [tooltipPosition]="tooltipPosition"
+                            [showDelay]="300"
+                            [hideDelay]="500"
                     >
- 
-                    <input class="openTimer"
+                        <div class="delete__icon --trash"></div>
+                    </button>
+                    <button class="pomodoro"
+                           (click)="setRoute(item.id)"
                            [routerLink]="['/timer/',item.id]"
                            type="button"
                            aria-label="Entrar no temporizador"
+                            [tooltip]="'Ir para o temporizador'"
+                            [tooltipPosition]="tooltipPosition"
+                            [showDelay]="1000"
+                            [hideDelay]="200"
                     >
+                        <div class="pomodoro__icon --redirect" ></div>
+                    </button>
 
                 </div>
             </div>
