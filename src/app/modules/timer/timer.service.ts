@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {IItem} from "../shared/interfaces/IItem";
 import {IUser} from "../shared/interfaces/IUser";
+import {Observable, Subject, Subscriber} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -8,6 +9,11 @@ import {IUser} from "../shared/interfaces/IUser";
 
 @Injectable()
 export class TimerService {
+
+    // Route handler for timer navbar
+    private _activeRoute!: string;
+    route$ = new Subject<string>()
+
     newUser: boolean;
     user: IUser = {
         name: "Usuário",
@@ -22,6 +28,10 @@ export class TimerService {
     };
 
     constructor() {
+        this.route$.subscribe({
+            next: (_route) => this._activeRoute = _route
+        })
+
         this.newUser = (localStorage.getItem('userSettings') === null);
 
         if (this.getLocalStorage()) {
@@ -147,5 +157,17 @@ export class TimerService {
             if (item == el.content) this.user.items.splice(index, 1);
             this.updateLocalStorage();
         });
+    }
+
+    getRoute() {
+        return this._activeRoute;
+    }
+
+    setRoute(value: string):void {
+        this._activeRoute = value;
+    }
+
+    resetRoute():void {
+        this._activeRoute = "";
     }
 }
