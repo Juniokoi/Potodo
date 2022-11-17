@@ -11,7 +11,7 @@
             <div class="item"
                  >
                 
-                <div class="content">
+                <div class="item__content">
                      <input class="checkbox"
                             (click)="checkTask(item.id,  !item.complete)"
                             name="check"
@@ -19,9 +19,9 @@
                             [checked]="item.complete"
                      >
                     
-                    <span [ngClass]="{'checked': item.complete}">
+                    <div class="item__content--text" [ngClass]="{'checked': item.complete}">
                         {{item.content}}
-                    </span>
+                    </div>
                 </div>
  
                 <div class="options"
