@@ -12,7 +12,7 @@ import {TimerModeEnums} from "../../../shared/enums/TimerMode.enums";
     templateUrl: './pomodoro.component.html',
     styleUrls: ['./pomodoro.component.scss']
 })
-
+//TODO: Add Completion task visuals
 export class PomodoroComponent implements OnInit, IDeactivate {
 
     sub: Subscription;
