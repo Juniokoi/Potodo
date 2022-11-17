@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injector, OnInit} from '@angular/core';
 import {TimerService} from "../../timer.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {IItem} from '../../../shared/interfaces/IItem';
 import {TooltipPosition} from "../../../shared/ui/tooltip/TooltipPosition.enums";
+import {AddItemComponent} from "./components/add-item/add-item.component";
+import {DynamicService} from "./components/services/dynamic.service";
 
 @Component({
     selector: 'list',
@@ -10,46 +12,31 @@ import {TooltipPosition} from "../../../shared/ui/tooltip/TooltipPosition.enums"
     styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-    form: FormGroup;
+    addItemComponent:any = AddItemComponent;
+    componentSwitcher!: boolean;
+
     items: IItem[] = this._service.getListItems();
-    inputFocused = false;
     hoverItem = "";
     tooltipPosition: TooltipPosition = TooltipPosition.BELOW;
 
+    test(){
+
+    }
 
     constructor(
+        private _injector: Injector,
         private _service: TimerService,
+        private _dyn: DynamicService,
         private fb: FormBuilder
     ) {
-        this.form = this.fb.group({
-            task: [null, [Validators.required,
-                Validators.minLength(2),
-                Validators.maxLength(256)]]
-        });
+        this.componentSwitcher = false;
+        this._dyn.output$.subscribe((data) => {
+            console.log(data);
+            this.componentSwitcher = data;
+        })
     }
 
     ngOnInit(): void {
-    }
-
-    handleLabel(status: string): void {
-        switch (status) {
-            case "focus":
-                this.inputFocused = true;
-                break
-            case "blur":
-                this.inputFocused = false;
-                break
-        }
-        this.applyVisual();
-    }
-
-    applyVisual() {
-        const _focused = this.inputFocused;
-        const _empty = this.form.get('task')?.value !== null && this.form.get('task')?.value !== "";
-
-        return {
-            'focused':  _focused || _empty
-        }
     }
 
     removeTask(task: string) {
@@ -60,17 +47,6 @@ export class ListComponent implements OnInit {
         let _temp = this._service.getItem(id);
         _temp.complete = content;
         this._service.checkItem(id, _temp.complete)
-    }
-
-    isValid() {
-        return this.form.get('task')!.valid
-    }
-
-    addTask() {
-        if (this.form.valid) {
-            this._service.addItem(this.form.value);
-            this.form.reset()
-        }
     }
 
     setRoute(id: string) {

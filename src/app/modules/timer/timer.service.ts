@@ -6,8 +6,6 @@ import {Subject} from "rxjs";
 @Injectable({
     providedIn: 'root'
 })
-
-@Injectable()
 export class TimerService {
 
     // Route handler for timer navbar
@@ -79,7 +77,8 @@ export class TimerService {
                     {
                         id: _item.id,
                         content: _item.content,
-                        complete: _item.complete
+                        complete: _item.complete,
+                        totalSections: _item.totalSections
                     }
                 ];
             }
@@ -103,9 +102,9 @@ export class TimerService {
         this.user = {
             name: "Novo Usuário",
             items: [
-                {id: "0", content: "Revisar as anotações da aula", complete: false},
-                {id: "1", content: "Terminar o trabalho", complete: false},
-                {id: "2", content: "Arrumar o quarto", complete: true}
+                {id: "0", content: "Revisar as anotações da aula", complete: false, totalSections:1},
+                {id: "1", content: "Terminar o trabalho", complete: false, totalSections:1},
+                {id: "2", content: "Arrumar o quarto", complete: true, totalSections:1}
             ],
             timerSetting: {
                 focusTimer: 25,
@@ -117,11 +116,12 @@ export class TimerService {
         };
     }
 
-    addItem({task}: { task: string }) {
+    addItem({task, sections}: { task: string, sections: number }) {
         this.user.items.push({
             id: this.user.items.length.toString(),
             content: task,
-            complete: false
+            complete: false,
+            totalSections: sections
         });
 
         this.updateLocalStorage();
@@ -129,10 +129,9 @@ export class TimerService {
 
     getItem(id: string): IItem {
         let tempItem: IItem;
-        this.user.items.forEach((el, index) => {
+        this.user.items.forEach((el) => {
             if (id == el.id)
                 tempItem = el;
-
             return -1;
         });
         return tempItem!;

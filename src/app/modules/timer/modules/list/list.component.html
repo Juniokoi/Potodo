@@ -55,33 +55,13 @@
             </div>
         </li>
     </ul>
-
+<div class="add-item" >
+    <div *ngIf="!componentSwitcher">
+    <button class="add-item--button" (click)="componentSwitcher = !componentSwitcher">Adicionar item</button>
+    </div>
+    <div *ngIf="componentSwitcher">
+        <ng-container *ngComponentOutlet="addItemComponent" #test></ng-container>
+    </div>
+</div>
 <!-- Todo: Make this form a new component to be activated when clicked on one button -->
-    <form class="form"
-          [formGroup]="form"
-          (ngSubmit)="addTask()"
-    >
- 
-        <div class="input">
-
-            <input (focus)="handleLabel('focus')"
-                   (blur)="handleLabel('blur')"
-                   autocomplete="off"
-                   formControlName="task"
-                   type="text"
-                   id="floatingInput"
-            >
-            <label [ngClass]="applyVisual()"
-                   for="floatingInput">
-                Adicionar tarefa
-            </label>
-            
-        </div>
-
-        <button [class]="isValid() ? '_valid' : '_disabled'"
-                (click)="addTask()"
-                [disabled]="!isValid()">
-            +
-        </button>
-    </form>
 </div>

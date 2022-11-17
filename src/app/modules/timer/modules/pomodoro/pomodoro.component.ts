@@ -30,7 +30,7 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     editMode: boolean = false;
     mouseActive: boolean = false;
     currentMode: TimerModeEnums = TimerModeEnums.focus;
-    pomodoroMaxSessions: number = 6;
+    pomodoroMaxSessions!: number
     pomodoroLongPause: number = 4;
     pomodoroCurrentSection: number = 1;
     autoPlay: boolean = this.user.autoPlay;
@@ -59,6 +59,12 @@ export class PomodoroComponent implements OnInit, IDeactivate {
             }
         );
 
+        if (this.item.totalSections)
+            this.pomodoroMaxSessions = this.item.totalSections;
+
+        if (this.item.currentSection)
+            this.pomodoroCurrentSection = this.item.currentSection
+
         this.initSec = this.sec = (this._focusTime * 60);
 
         this.updateTimer();
@@ -68,24 +74,26 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     }
 
     checkNextTimerMode() {
+        const isCompleted = this.pomodoroCurrentSection === this.pomodoroMaxSessions;
         if (this.currentMode === 'focus') {
             this.pomodoroCurrentSection++;
+            this.updateItem()
 
-            if (this.pomodoroLongPause > this.pomodoroCurrentSection) {
+            if ( this.pomodoroCurrentSection < 4 ) {
                 this.switchTimerMode('shortPause');
             } else {
                 this.switchTimerMode('longPause');
                 this.pomodoroCurrentSection = 0;
             }
 
-            if (this.autoPause) {
+            if (this.autoPause && !isCompleted) {
                 this.startTimer();
             }
 
         } else {
             this.switchTimerMode('focus');
 
-            if (this.autoPlay) {
+            if (this.autoPlay && !isCompleted) {
                 this.startTimer();
             }
         }
@@ -228,6 +236,7 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     stopTimer() {
         this.pauseTimer();
         this.resetTimer();
+        this.switchTimerMode(this.currentMode)
     }
 
     startTimer(): void {

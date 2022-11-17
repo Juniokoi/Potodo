@@ -1,0 +1,54 @@
+<div class="add-item" >
+    <form class="form"
+          [formGroup]="form"
+          (ngSubmit)="addTask()"
+    >
+ 
+        <div class="form__task">
+
+            <input
+                    autofocus
+                (focus)="handleLabel('focus')"
+                   (blur)="handleLabel('blur')"
+                   autocomplete="off"
+                   formControlName="task"
+                   type="text"
+                   id="floatingInput"
+            >
+            <label [ngClass]="applyVisual()"
+                   for="floatingInput">
+                O que planeja fazer?
+            </label>
+            
+        </div>
+
+        
+        <div class="form__section">
+            <label class="form__section__label"
+                   for="number">
+                Quantas sessões?
+            </label>
+            <input class="form__section__input"
+                   formControlName="sections"
+                   type="number"
+                   id="number"
+                   min="0"
+                   max="12"
+                   value="1">
+        </div>
+    </form>
+    
+    <div class="actions">
+        <button class="actions__btn actions__btn-cancel"
+                (click)="cancel()"
+        >
+            Cancelar
+        </button>
+        <button class="actions__btn actions__btn-save"
+            [class]="buttonValidateClass()"
+                (click)="addTask()"
+                [disabled]="!isValid()">
+            Salvar
+        </button>
+    </div>
+</div>
