@@ -6,12 +6,12 @@
         <ul>
             <li>
                 <a routerLink="/timer" routerLinkActive="route-active" [routerLinkActiveOptions]="{exact: true}">
-                    <div class="icon menu"></div>
+                    <div class="icon menu" (click)="resetRoute()"></div>
                 </a>
             </li>
 
-            <li *ngIf="hasTimer">
-                <a [routerLink]="['/timer', currentId]" routerLinkActive="route-active">
+            <li *ngIf="this.hasRoute">
+                <a [routerLink]="['/timer', currentRoute]" routerLinkActive="route-active">
                     <div class="icon timer"></div>
                 </a>
             </li>

@@ -15,11 +15,11 @@ export class ConfigComponent implements OnInit, OnDestroy {
     form: FormGroup;
     user!: IUser;
 
-    private _focus: number;
-    private _short: number;
-    private _long: number;
-    private _autoPause: boolean;
-    private _autoPlay: boolean;
+    _focus: number;
+    _short: number;
+    _long: number;
+    _autoPause: boolean;
+    _autoPlay: boolean;
 
 
     constructor(
@@ -30,7 +30,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
         this.subs = this._route.data.subscribe(
             ({user}) => {
-                console.log(user);
                 this.user = user;
             }
         );
@@ -54,56 +53,12 @@ export class ConfigComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
     }
 
-    test(e: any) {
-        console.log(e);
-    }
-
-    getFocus() {
-        return this._focus;
-    }
-
-    getShort() {
-        return this._short;
-    }
-
-    getLong() {
-        return this._long;
-    }
-
-    setFocus(num: number) {
-        this._focus = num;
-    }
-
-    setShort(num: number) {
-        this._short = num;
-    }
-
-    setLong(num: number) {
-        this._long = num;
-    }
-
-    getAutoPause(): boolean {
-        return this._autoPause;
-    }
-
-    getAutoPlay(): boolean {
-        return this._autoPlay;
-    }
-
-    setAutoPause(val: boolean): void {
-        this._autoPause = val;
-    }
-
-    setAutoPlay(val: boolean): void {
-        this._autoPlay = val;
-    }
-
-    checkValue(val: string ): boolean {
+    checkValue(val: string): boolean {
         return this.form.get(val)?.value - 5 >= 0;
     }
 
     add(val: string) {
-            this.form.controls[val].setValue(this.form.get(val)?.value + 5);
+        this.form.controls[val].setValue(this.form.get(val)?.value + 5);
     }
 
     sub(val: string) {
@@ -113,8 +68,19 @@ export class ConfigComponent implements OnInit, OnDestroy {
             this.form.controls[val].setValue(0);
     }
 
+    checkNum(val: string) {
+        let _value = Math.floor(this.form.get(val)?.value);
+        const _setValue = (_v: number) => this.form.controls[val].setValue(_v);
+
+        if (_value == 0) {
+            _setValue(1);
+        } else {
+            _setValue(_value);
+        }
+    }
+
     saveUser() {
-        const _user:IUser = {
+        const _user: IUser = {
             name: "",
             items: [],
             timerSetting: {
@@ -124,9 +90,9 @@ export class ConfigComponent implements OnInit, OnDestroy {
             },
             autoPause: this.form.get('autoPause')?.value,
             autoPlay: this.form.get('autoPlay')?.value
-        }
+        };
 
-        this._service.updateUser(_user)
+        this._service.updateUser(_user);
     }
 
     ngOnDestroy() {

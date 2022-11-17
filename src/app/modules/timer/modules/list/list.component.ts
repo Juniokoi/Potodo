@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {TimerService} from "../../timer.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { IItem } from '../../../shared/interfaces/IItem';
+import {IItem} from '../../../shared/interfaces/IItem';
+import {TooltipPosition} from "../../../shared/ui/tooltip/TooltipPosition.enums";
 
 @Component({
     selector: 'list',
@@ -10,13 +11,14 @@ import { IItem } from '../../../shared/interfaces/IItem';
 })
 export class ListComponent implements OnInit {
     form: FormGroup;
-    items: IItem[] = this.listService.getListItems();
-    inputFocused: boolean = false;
-    hoverItem: string = "";
+    items: IItem[] = this._service.getListItems();
+    inputFocused = false;
+    hoverItem = "";
+    tooltipPosition: TooltipPosition = TooltipPosition.BELOW;
 
 
     constructor(
-        private listService: TimerService,
+        private _service: TimerService,
         private fb: FormBuilder
     ) {
         this.form = this.fb.group({
@@ -51,13 +53,13 @@ export class ListComponent implements OnInit {
     }
 
     removeTask(task: string) {
-        this.listService.removeItem(task);
+        this._service.removeItem(task);
     }
 
     checkTask(id: string, content: boolean) {
-        let _temp = this.listService.getItem(id);
+        let _temp = this._service.getItem(id);
         _temp.complete = content;
-        this.listService.checkItem(id, _temp.complete)
+        this._service.checkItem(id, _temp.complete)
     }
 
     isValid() {
@@ -66,9 +68,13 @@ export class ListComponent implements OnInit {
 
     addTask() {
         if (this.form.valid) {
-            this.listService.addItem(this.form.value);
+            this._service.addItem(this.form.value);
             this.form.reset()
         }
+    }
+
+    setRoute(id: string) {
+        this._service.route$.next(id)
     }
 
 }

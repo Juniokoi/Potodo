@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {TimerService} from "./timer.service";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'timer',
@@ -6,14 +8,29 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./timer.component.scss']
 })
 export class TimerComponent implements OnInit {
-    hasTimer = true;
-    currentId = 0
+    sub: Subscription;
+    hasRoute!: boolean;
+    currentRoute?: string;
 
     constructor(
+        private _service: TimerService
     ) {
+        this.sub = this._service.route$.subscribe(
+            route => {
+                this.hasRoute = route != ""
+                this.currentRoute = route
+            }
+        )
     }
 
     ngOnInit(): void {
     }
 
+    resetRoute() {
+        this._service.route$.next("")
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
+    }
 }

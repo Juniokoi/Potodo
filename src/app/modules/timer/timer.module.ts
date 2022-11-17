@@ -14,6 +14,8 @@ import {ListsResolver} from "./guards/lists.resolver";
 import {TimerDeactivateGuard} from "./guards/timer-deactivate.guard";
 import {ConfigComponent} from './modules/config/config.component';
 import {ConfigResolver} from "./guards/config.resolver";
+import {TooltipComponent} from '../shared/ui/tooltip/tooltip.component';
+import {TooltipDirective} from '../shared/ui/tooltip/tooltip.directive';
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import {ConfigResolver} from "./guards/config.resolver";
         ListComponent,
         PomodoroComponent,
         ConfigComponent,
+        TooltipDirective,
+        TooltipComponent
     ],
     providers: [TimerService, ListGuard, ConfigResolver, ListsResolver, TimerDeactivateGuard],
 

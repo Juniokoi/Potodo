@@ -5,7 +5,7 @@ import {IItem} from "../../../shared/interfaces/IItem";
 import {TimerService} from "../../timer.service";
 import {IDeactivate} from "../../../shared/interfaces/IDeactivate";
 import {IUser} from "../../../shared/interfaces/IUser";
-import {TimerMode} from "../../../shared/interfaces/TimerMode";
+import {TimerModeEnums} from "../../../shared/enums/TimerMode.enums";
 
 @Component({
     selector: 'pomodoro',
@@ -17,13 +17,19 @@ export class PomodoroComponent implements OnInit, IDeactivate {
 
     sub: Subscription;
     item!: IItem;
+    ngForm: any;
+    model: {name: string} = {
+        name: ""
+    }
 
     user: IUser = this.service.getUserSettings();
     private _focusTime = this.user.timerSetting.focusTimer;
 
+    activeToolbar = false;
+
     editMode: boolean = false;
     mouseActive: boolean = false;
-    currentMode: TimerMode = TimerMode.focus;
+    currentMode: TimerModeEnums = TimerModeEnums.focus;
     pomodoroMaxSessions: number = 6;
     pomodoroLongPause: number = 4;
     pomodoroCurrentSection: number = 1;
@@ -83,7 +89,6 @@ export class PomodoroComponent implements OnInit, IDeactivate {
                 this.startTimer();
             }
         }
-        console.log(this.pomodoroLongPause, this.pomodoroCurrentSection);
     }
 
     applyTimerStyles(itemMode: string) {
@@ -97,17 +102,17 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         const {focusTimer, shortPause, longPause} = this.user.timerSetting;
         switch (value) {
             case 'focus':
-                this.currentMode = TimerMode.focus;
+                this.currentMode = TimerModeEnums.focus;
                 this.applyTimerStyles('focus');
                 this.setSec(focusTimer);
                 break;
             case 'shortPause':
-                this.currentMode = TimerMode.shortPause;
+                this.currentMode = TimerModeEnums.shortPause;
                 this.applyTimerStyles('shortPause');
                 this.setSec(shortPause);
                 break;
             case 'longPause':
-                this.currentMode = TimerMode.longPause;
+                this.currentMode = TimerModeEnums.longPause;
                 this.applyTimerStyles('longPause');
                 this.setSec(longPause);
                 break;
@@ -124,15 +129,20 @@ export class PomodoroComponent implements OnInit, IDeactivate {
 
     loseFocus() {
         if (!this.mouseActive) {
-            console.log("yay");
             this.editMode = false;
         }
     }
 
     saveTitle(_title: string) {
-        this.item.content = _title;
-        this.updateItem();
-        this.editMode = false;
+        if (_title.length <= 2) {
+            this.activeToolbar = true;
+            setTimeout(()=>{this.activeToolbar = false},3050)
+        } else {
+            this.item.content = _title;
+            this.updateItem();
+            this.editMode = false;
+            this.activeToolbar = false;
+        }
     }
 
     canDeactivate(): boolean {

@@ -1,21 +1,67 @@
 <div class="list-body">
-    <h1>Minha lista</h1>
+    <h1
+        [tooltipPosition]="tooltipPosition"
+        [tooltip]="'Ir para o temporizador'"
+    >Minha lista</h1>
     <ul>
-        <li *ngFor="let item of items">
-            <div class="item" (mouseenter)="hoverItem = item.id" (mouseleave)="hoverItem = ''">
+        <li *ngFor="let item of items"
+           (mouseenter)="hoverItem = item.id"
+           (mouseleave)="hoverItem = ''" >
+            
+            <div class="item"
+                 >
+                
                 <div class="content">
-                     <input class="checkbox" (click)="checkTask(item.id,  !item.complete)" name="check" type="checkbox" [checked]="item.complete">
-                    <span [ngClass]="{'checked': item.complete}">{{item.content}}</span>
+                     <input class="checkbox"
+                            (click)="checkTask(item.id,  !item.complete)"
+                            name="check"
+                            type="checkbox"
+                            [checked]="item.complete"
+                     >
+                    
+                    <span [ngClass]="{'checked': item.complete}">
+                        {{item.content}}
+                    </span>
                 </div>
-                <div [hidden]="hoverItem != item.id" class="options">
-                    <input class="delete" (click)="removeTask(item.content)" type="button" aria-label="Deletar item">
-                    <input class="openTimer" [routerLink]="['/timer/',item.id]" type="button" aria-label="Entrar no temporizador">
+ 
+                <div class="options"
+                     >
+ 
+                    <button class="delete"
+                           (click)="removeTask(item.content)"
+                           type="button"
+                           aria-label="Deletar item"
+                            [tooltip]="'Deletar item'"
+                            [tooltipPosition]="tooltipPosition"
+                            [showDelay]="300"
+                            [hideDelay]="500"
+                    >
+                        <div class="delete__icon --trash"></div>
+                    </button>
+                    <button class="pomodoro"
+                           (click)="setRoute(item.id)"
+                           [routerLink]="['/timer/',item.id]"
+                           type="button"
+                           aria-label="Entrar no temporizador"
+                            [tooltip]="'Ir para o temporizador'"
+                            [tooltipPosition]="tooltipPosition"
+                            [showDelay]="1000"
+                            [hideDelay]="200"
+                    >
+                        <div class="pomodoro__icon --redirect" ></div>
+                    </button>
+
                 </div>
             </div>
         </li>
     </ul>
 
-    <form class="form" [formGroup]="form" (ngSubmit)="addTask()">
+<!-- Todo: Make this form a new component to be activated when clicked on one button -->
+    <form class="form"
+          [formGroup]="form"
+          (ngSubmit)="addTask()"
+    >
+ 
         <div class="input">
 
             <input (focus)="handleLabel('focus')"
@@ -23,12 +69,18 @@
                    autocomplete="off"
                    formControlName="task"
                    type="text"
-                   id="floatingInput">
-
-            <label [ngClass]="applyVisual()" for="floatingInput">Adicionar tarefa</label>
+                   id="floatingInput"
+            >
+            <label [ngClass]="applyVisual()"
+                   for="floatingInput">
+                Adicionar tarefa
+            </label>
+            
         </div>
 
-        <button (click)="addTask()" [class]="isValid() ? '_valid' : '_disabled'" [disabled]="!isValid()">
+        <button [class]="isValid() ? '_valid' : '_disabled'"
+                (click)="addTask()"
+                [disabled]="!isValid()">
             +
         </button>
     </form>

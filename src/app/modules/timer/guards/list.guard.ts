@@ -13,7 +13,7 @@ export class ListGuard implements CanActivate{
         state: RouterStateSnapshot
         ) :  Observable<boolean> | boolean {
 
-            if (this.s.getItem(route.params['id']))
+            if (this.s.getItem(route.params['id']) && route.params['id'] === this.s.getRoute())
                 return true;
 
             this.r.navigate(['/timer']);

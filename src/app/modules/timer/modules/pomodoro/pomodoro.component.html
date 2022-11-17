@@ -1,14 +1,51 @@
 <section>
-    <div class="header" (mouseenter)="mouseActive = true" (mouseleave)="mouseActive = false">
-        <div class="edit" *ngIf="editMode">
-            <input #newName (blur)="loseFocus()" placeholder="Digite o novo título" type="text">
-            <button (click)="saveTitle(newName.value)">save</button>
+    <div
+        class="header"
+        (mouseenter)="mouseActive = true"
+        (mouseleave)="mouseActive = false">
+ 
+        <div
+            class="edit"
+            *ngIf="editMode">
+ 
+            <input
+                   (blur)="loseFocus()"
+                   placeholder="Digite o novo título"
+                   min="2"
+                   max="100"
+                   name="name"
+                   #name
+                   type="text">
+            
+            <button *ngIf="!activeToolbar"
+                (click)="this.saveTitle(name.value)">
+                save
+            </button>
+ 
+            <button
+                *ngIf="activeToolbar"
+                [tooltipAlways]="true"
+                [hideDelay]="3000"
+                [tooltip]="'O título precisa ter 3 ou mais caracteres'"
+                (click)="this.saveTitle(name.value)">
+                save
+            </button>
+            <div
+            ></div>
+ 
         </div>
-        <div class="title" *ngIf="!editMode">
+        <div
+            class="title"
+            *ngIf="!editMode">
+            
             <h3>
                 {{item.content}}
             </h3>
-            <div *ngIf="!isActive" (click)="editMode = !editMode" class="editButton"></div>
+            
+            <div class="editButton"
+                 *ngIf="!isActive"
+                 (click)="editMode = !editMode">
+            </div>
         </div>
     </div>
 
@@ -24,7 +61,7 @@
     <input *ngIf="started" class="stop" type="button" value="Desistir" (click)="stopTimer()">
     
     <div>
-        <ul >
+        <ul>
             <li (click)="onClickChangeMode('focus')"
                 [ngClass]="applyTimerStyles('focus')">
                 Hora de focar
