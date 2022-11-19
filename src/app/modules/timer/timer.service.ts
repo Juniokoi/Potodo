@@ -17,8 +17,8 @@ export class TimerService {
         items: [],
         timerSetting: {
             focusTimer: 25,
-            shortPause: 30,
-            longPause: 5
+            shortPause: 5,
+            longPause: 30
         },
         autoPlay: false,
         autoPause: false
@@ -108,8 +108,8 @@ export class TimerService {
             ],
             timerSetting: {
                 focusTimer: 25,
-                shortPause: 30,
-                longPause: 5
+                shortPause: 5,
+                longPause: 30
             },
             autoPlay: false,
             autoPause: false
