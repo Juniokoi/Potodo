@@ -58,7 +58,7 @@ Finally, enter on: `http://localhost:4200/`
 &nbsp;
 
 ### 📜 License
-Potodo is under the GNU v3 license, which grants the following permissions:  
+Potodo is under the **GPL v3** license, which grants the following permissions:  
 
 - Distribution
 - Modification
