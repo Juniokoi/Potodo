@@ -23,7 +23,9 @@ Finally, enter on: `http://localhost:4200/`
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![Main screen](https://user-images.githubusercontent.com/53125029/202861400-b66fb043-c5ad-44d6-9ecd-7fd97cf8d9ea.png)
+![Timer screen](https://user-images.githubusercontent.com/53125029/202861416-f0fbecd6-beca-46ab-b723-21b26a4de9b5.png)
+![Setting Screen](https://user-images.githubusercontent.com/53125029/202861436-96cf50fa-bd11-4993-8253-908e001de289.png)
 
 
 ## Tools used
