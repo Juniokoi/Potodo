@@ -1,11 +1,45 @@
-# Potodo: Um pomodoro diferente
+# Potodo: A different pomodoro
+<!-- <img src="https://img.shields.io/github/license/PotodoApp/potodo?color=blue" alias="License"> -->
+Potodo is a free open-source focused on creating a distraction-free ambient using techniques like pomodoro timer and todo-list.
 
-Um projeto desenvolvido para a matéria de **Projeto Integrador: Programação de Computadores**, lecionado pelo professor
-Edson Luiz Machado  
-Sendo os participantes: @JunioKoi, @JeniferKossar e Daniel    
-Esse projeto foi gerado com o [Angular CLI](https://github.com/angular/angular-cli) v14.2.6.  
-Como está em fase inicial de desenvolvimento, é possível  
 
-## Development server
+## Run locally
+This app doesn't have a Docker build, still necessary the use of Angular CLI  
+Before, make sure you have installed Node 18v lts and NPM
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+To download Angular CLI execute:  
+```npm i -g @angular/cli```  
+
+And this app uses yarn as package manager since it builds faster than NPM
+Check if you have currently installed: `yarn -v`  
+If not, execute:  
+```npm i -g yarn```  
+
+After downloading the requirements, enter on the downloaded repository and execute:  
+```ng serve```  
+to run locally.   
+Finally, enter on: `http://localhost:4200/`  
+
+
+## Screenshots
+
+![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+
+
+## Tools used
+- **Node** `v18.12.* lts`
+- **Yarn** `v1.12.*`
+- **Angular CLI** `v14.2.8`  
+
+## 📜 License
+Potodo is under the GNU v3 license, which grants the following permissions:  
+
+- Distribution
+- Modification
+- Private use
+
+But revoge those:
+- Commercial use
+
+For more details see the [LICENSE](https://github.com/PotodoApp/Potodo/blob/main/LICENSE)
+
