@@ -14,13 +14,14 @@ A unique focus app
 &nbsp;
 
 <p align="center">
-Potodo is a free open-source focused on creating a distraction-free ambient using techniques like pomodoro timer and todo-list.
+A website <em>(soon app)</em> focused on creating a distraction-free ambient using techniques like pomodoro timer and todo-list.<br>
+Completly free and community-driven
 </p>
 
 &nbsp;
 
 <details>
-<summary><h2>📸 Screenshots</h2></summary>
+<summary align="center"><h2>📸 Showcase</h2></summary>
 
 ![Main screen](https://user-images.githubusercontent.com/53125029/202861400-b66fb043-c5ad-44d6-9ecd-7fd97cf8d9ea.png)
 ![Timer screen](https://user-images.githubusercontent.com/53125029/202861416-f0fbecd6-beca-46ab-b723-21b26a4de9b5.png)
