@@ -6,26 +6,30 @@ $margin_top: 150px;
 .list-body {
     position: relative;
     background-color: $surface-secondary;
-    min-width: 30vw;
+    display: grid;
 
     margin: $margin_top 3em 3em;
     padding: 2rem;
     border: 4px solid $surface_primary;
     border-radius: 15px;
     box-shadow: 0 6px 15px #{$brand-primary}30;
+    max-width: 30vw;
+    width: 100%;
+    min-width: 270px;
 
     ul {
         list-style: none;
         padding: 0;
 
         li {
-            margin-bottom: 1em;
+            width: 100%;
+            margin: 0 auto;
+            max-width: 400px;
 
             .item {
-                min-width: 250px;
                 background-color: $brand-secondary;
                 color: black;
-                width: 80%;
+                min-width: 200px;
                 height: 50px;
                 padding: 0.75em;
                 border-radius: 10px;
@@ -117,13 +121,24 @@ h1 {
 }
 
 .add-item {
-    position: absolute;
     transition: scale 100ms ease-in-out;
+    z-index: 6;
+
+    div {
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+
+    }
+
+    &--button, &--menu {
+        position: absolute;
+        bottom: -40px;
+        width: 300px;
+    }
 
     &--button {
-        bottom: -40px;
         height: 60px;
-        width: 300px;
         border-radius: 10px;
         border-style: dashed;
         background-color: $surface-secondary;
@@ -135,5 +150,16 @@ h1 {
         &:hover {
             scale: 110%;
         }
+    }
+
+    &--menu {
+        width: 100%;
+        bottom: -150px ;
+    }
+}
+
+
+@include media("<desktop") {
+    .add-item--menu {
     }
 }
