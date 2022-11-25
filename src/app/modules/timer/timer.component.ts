@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {TimerService} from "./timer.service";
 import {Subscription} from "rxjs";
 
@@ -13,7 +13,8 @@ export class TimerComponent implements OnInit {
     currentRoute?: string;
 
     constructor(
-        private _service: TimerService
+        private _service: TimerService,
+        private _er: ElementRef
     ) {
         this.sub = this._service.route$.subscribe(
             route => {
@@ -24,6 +25,7 @@ export class TimerComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(window.innerWidth)
     }
 
     resetRoute() {

@@ -1,0 +1,20 @@
+@include keyframes(slideInUp) {
+    0% {
+        opacity: 0;
+        @include transform(translateY(1000px));
+    }
+    100% {
+        opacity: 1;
+        @include transform(translateY(0));
+    }
+}
+
+@mixin slideInUp($duration: $durationDefault ,$delay: $delayDefault, $count: $countDefault,  $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
+    @include animation-name(slideInUp);
+    @include count($count);
+    @include duration($duration);
+    @include delay($delay);
+    @include function(normal);
+    @include fill-mode($fill);
+    @include visibility($visibility);
+}
