@@ -8,7 +8,7 @@
     }
 }
 
-@mixin slideOutDown($duration: $durationDefault ,$delay: $delayDefault, $count: $countDefault,  $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
+@mixin slideOutDown($duration: $_durationDefault ,$delay: $_delayDefault, $count: $_countDefault,  $function: $_functionDefault, $fill: $_fillDefault, $visibility: $_visibilityDefault) {
     @include animation-name(slideOutDown);
     @include count($count);
     @include duration($duration);
