@@ -5,11 +5,9 @@ import {TimerModule} from "../timer/timer.module";
 import {CoreRoutingModule} from './core-routing.module';
 
 import {CoreComponent} from "./core.component";
-import {HomeComponent} from "../home/home.component";
 
 @NgModule({
     declarations: [
-        HomeComponent,
         CoreComponent,
     ],
     imports: [
@@ -20,7 +18,6 @@ import {HomeComponent} from "../home/home.component";
     ],
     providers: [],
     bootstrap: [CoreComponent],
-    entryComponents: [HomeComponent]
 })
 
 export class CoreModule {

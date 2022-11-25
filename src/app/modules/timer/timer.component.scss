@@ -1,76 +1,146 @@
 @import 'base';
 
 $border: 90px;
-
-section {
-    margin-left: $border;
-    display: flex;
-    justify-content: center;
+main {
+    overflow-x: hidden;
 }
-
 nav {
-    padding: 4em 0;
-    background: $surface-secondary;
     position: fixed;
-    border-radius: 0 25px 25px 0;
+    background: $surface-secondary;
+}
 
-    width: $border; height: 100%; min-height: 400px;
-
+.title {
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr; grid-template-columns: 1fr; grid-template-areas: "title" "navItems" ".";
+    grid-area: title;
+    align-self: start;
+    justify-self: start;
+    width: auto;
+    background-color: transparent;
+    border: transparent;
+    transition: opacity 200ms ease-in-out;
+    @include slideInUp();
 
-    .title {
-        align-self: start; grid-area: title; justify-self: center;
-        width: auto;
-        background-color: transparent;
-        border: transparent;
-        .brand {
-            @include _url("Brand");
-            background: #FBBF24;
-            width: 74px; height: 42px;
+    .brand {
+        @include _url("Brand");
+        background: #FBBF24;
+        width: 74px;
+        height: 42px;
 
-            transition: background-color ease-in 100ms 200ms;
-            &:hover {
-                background: blueviolet;
-                transition-delay: 0ms;
-            }
-        }
-    }
+        transition: background-color ease-in 100ms 200ms;
 
-    ul {
-        padding: 0;
-        grid-area: navItems;
-        justify-self: center;
-
-        li {
-            padding: 1rem 0;
-            list-style: none;
-            .menu {
-                @include _url("Menu");
-            }
-            .timer {
-                @include _url("Timer");
-            }
-            .config {
-                @include _url("Config");
-            }
-            .user {
-                @include _url("User");
-            }
+        &:hover {
+            background: blueviolet;
+            transition-delay: 0ms;
         }
     }
 }
 
+ul {
+    padding: 0;
+    grid-area: navItems;
+    justify-self: center;
+
+    li {
+        padding: 1rem 0;
+        list-style: none;
+
+        .menu {
+            @include _url("Menu");
+        }
+
+        .timer {
+            @include _url("Timer");
+        }
+
+        .config {
+            @include _url("Config");
+        }
+
+        .user {
+            @include _url("User");
+        }
+
+
+        .route-active {
+            div {
+                background-color: #fbbf24;
+            }
+        }
+    }
+}
 
 .icon {
     $size: 32px;
-    width: $size; height: $size;
+    width: $size;
+    height: $size;
 
-    background-color:  #FFFFFF;
+    background-color: #ffffff;
 }
 
-.route-active {
-    div {
-        background-color: #FBBF24;
+section {
+    display: flex;
+    justify-content: center;
+    margin-left: $border;
+    transition: margin-left 200ms ease-out;
+    height: 100vh;
+}
+
+@include media(">=desktop") {
+    nav {
+        @include slideInLeft(300ms, 300ms);
+        height: 100%;
+        border-radius: 0 25px  0 25px;
+        padding: 4em 0;
+        display: grid;
+        left: 0;
+        width: $border;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 1fr;
+        grid-template-areas: "title" "navItems" "."  ;
+    }
+}
+
+@include media("<desktop") {
+    main {
+        display: flex;
+        justify-content: center;
+    }
+
+
+    nav {
+        $height: 80px;
+        bottom: 0;
+        height: $height;
+        width: 80%;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        @include slideInUp(300ms, 300ms);
+        border-radius: 10px 10px 0 0;
+        .title {
+            position: absolute;
+            left: calc(#{$height} / 4);
+            bottom: calc(#{$height} / 5);
+        }
+
+        ul {
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+            li {
+                padding: 0;
+            }
+        }
+    }
+    section {
+        margin-left: 0;
+    }
+}
+
+@include media("<phone-md") {
+    .title {
+        @include slideOutDown(4s, 0ms)
     }
 }

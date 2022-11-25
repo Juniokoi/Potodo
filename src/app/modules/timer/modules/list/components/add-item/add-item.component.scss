@@ -5,6 +5,8 @@
     background-color: $surface-secondary;
     border-radius: 8px;
     box-shadow: 0 4px 8px #{$crust}aa;
+    margin-left: -80px;
+    border: 1px solid #{$text-primary}55
 }
 
 
@@ -12,7 +14,6 @@
     display: flex;
     gap: 1rem;
     flex-direction: column;
-    justify-content: flex-start;
     margin-bottom: 32px;
 
 
