@@ -1,6 +1,5 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import {TimerService} from "../../timer.service";
-import {FormBuilder} from "@angular/forms";
 import {IItem} from '../../../shared/interfaces/IItem';
 import {TooltipPosition} from "../../../shared/ui/tooltip/TooltipPosition.enums";
 import {AddItemComponent} from "./components/add-item/add-item.component";
@@ -19,15 +18,10 @@ export class ListComponent implements OnInit {
     hoverItem = "";
     tooltipPosition: TooltipPosition = TooltipPosition.BELOW;
 
-    test(){
-
-    }
-
     constructor(
         private _injector: Injector,
         private _service: TimerService,
         private _dyn: DynamicService,
-        private fb: FormBuilder
     ) {
         this.componentSwitcher = false;
         this._dyn.output$.subscribe((data) => {
