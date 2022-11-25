@@ -67,5 +67,5 @@ Potodo is under the **GPL v3** license, which grants the following permissions:
 But revoge those:
 - Commercial use
 
-For more details see the [LICENSE](https://github.com/PotodoApp/Potodo/blob/main/LICENSE)
+For more details see the [LICENSE](https://github.com/juniokoi/Potodo/blob/main/LICENSE)
 
