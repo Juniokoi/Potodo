@@ -24,15 +24,15 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            "src/assets",
-                            "src/assets/favicon.ico"
+                            "src/app/assets",
+                            "src/app/assets/favicon.ico"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                            "src/app/styles/styles.scss"
                         ],
                         "stylePreprocessorOptions": {
                             "includePaths": [
-                                "src/styles"
+                                "src/app/styles"
                             ]
                         },
                         "scripts": []
@@ -80,7 +80,7 @@
                             "browserTarget": "potodo:build:development"
                         }
                     },
-                    "defaultConfiguration": "development",
+                    "defaultConfiguration": "development"
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -97,15 +97,15 @@
                         "karmaConfig": "karma.conf.js",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            "src/assets",
-                            "src/assets/favicon.ico"
+                            "src/app/assets",
+                            "src/app/assets/favicon.ico"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                            "src/app/styles.scss"
                         ],
                         "stylePreprocessorOptions": {
                             "includePaths": [
-                                "src/styles"
+                                "src/app/styles"
                             ]
                         },
                         "scripts": []
