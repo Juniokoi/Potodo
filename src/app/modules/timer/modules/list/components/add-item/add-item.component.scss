@@ -16,44 +16,6 @@
     flex-direction: column;
     margin-bottom: 32px;
 
-
-    &__task {
-        position: relative;
-        border-radius: 8px;
-
-        & > * {
-            cursor: text;
-            height: 24px;
-            padding: 16px 15px 5px;
-        }
-
-        & input {
-            transition: all 100ms ease-in;
-            font-size: 1em;
-            border: none;
-            background-color: #E4D6FFFF;
-            border-radius: 10px;
-        }
-
-        & label {
-            position: absolute;
-            top: -4px;
-            width: 200px;
-            height: auto;
-            color: black;
-            font-weight: 600;
-            left: 0;
-            user-select: none;
-            transition: all 100ms ease-in-out 100ms;
-        }
-
-        &--focused {
-            transform: scale(90%) translateY(-13px) translateX(-15px);
-            transition-delay: 0ms;
-            filter: opacity(80%);
-        }
-    }
-
     &__section {
         display: flex;
         flex-direction: column;

@@ -1,0 +1,17 @@
+<div>
+    <input
+        autofocus
+        (focus)="handleLabel('focus')"
+        (blur)="handleLabel('blur')"
+        autocomplete="off"
+        type="text"
+        id="floatingInput"
+        (keyup)="emitValue()"
+        (keydown.escape)="emitEscape()"
+        [(ngModel)]="inputValue"
+    >
+    <label [ngClass]="applyVisual()"
+           for="floatingInput">
+        {{placeholder}}
+    </label>
+</div>

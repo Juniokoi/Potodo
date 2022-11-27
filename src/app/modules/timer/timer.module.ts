@@ -19,6 +19,7 @@ import {TooltipDirective} from '../shared/ui/tooltip/tooltip.directive';
 import {AddItemComponent} from './modules/list/components/add-item/add-item.component';
 import {DynamicService} from "./modules/list/components/services/dynamic.service";
 import {CustomAutoFocus} from "../shared/directives/auto-focus.directive";
+import {TextInputComponent} from "../shared/ui/text-input/text-input.component";
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {CustomAutoFocus} from "../shared/directives/auto-focus.directive";
         ConfigComponent,
         TooltipDirective,
         TooltipComponent,
+        TextInputComponent,
         AddItemComponent,
         CustomAutoFocus
     ],
