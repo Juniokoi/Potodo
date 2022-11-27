@@ -18,20 +18,20 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     sub: Subscription;
     item!: IItem;
     ngForm: any;
-    model: {name: string} = {
+    model: { name: string } = {
         name: ""
-    }
+    };
 
     user: IUser = this.service.getUserSettings();
     private _focusTime = this.user.timerSetting.focusTimer;
 
-    activeToolbar = false;
+    editInput = "";
+    placeholder!: string;
 
     editMode: boolean = false;
     mouseActive: boolean = false;
     currentMode: TimerModeEnums = TimerModeEnums.focus;
-    pomodoroMaxSessions!: number
-    pomodoroLongPause: number = 4;
+    pomodoroMaxSessions!: number;
     pomodoroCurrentSection: number = 1;
     autoPlay: boolean = this.user.autoPlay;
     autoPause: boolean = this.user.autoPause;
@@ -46,6 +46,7 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     extraSeconds!: string;
 
     sec!: number;
+
     initSec: number;
 
     constructor(
@@ -58,12 +59,13 @@ export class PomodoroComponent implements OnInit, IDeactivate {
                 this.item = tasks;
             }
         );
+        this.editInput = this.item.content;
 
         if (this.item.totalSections)
             this.pomodoroMaxSessions = this.item.totalSections;
 
         if (this.item.currentSection)
-            this.pomodoroCurrentSection = this.item.currentSection
+            this.pomodoroCurrentSection = this.item.currentSection;
 
         this.initSec = this.sec = (this._focusTime * 60);
 
@@ -77,9 +79,9 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         const isCompleted = this.pomodoroCurrentSection === this.pomodoroMaxSessions;
         if (this.currentMode === 'focus') {
             this.pomodoroCurrentSection++;
-            this.updateItem()
+            this.updateItem();
 
-            if ( this.pomodoroCurrentSection < 4 ) {
+            if (this.pomodoroCurrentSection < 4) {
                 this.switchTimerMode('shortPause');
             } else {
                 this.switchTimerMode('longPause');
@@ -135,22 +137,25 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         this.resetTimer();
     }
 
-    loseFocus() {
+    loseFocus($event: boolean = true) {
         if (!this.mouseActive) {
             this.editMode = false;
         }
     }
 
-    saveTitle(_title: string) {
-        if (_title.length <= 2) {
-            this.activeToolbar = true;
-            setTimeout(()=>{this.activeToolbar = false},3050)
-        } else {
-            this.item.content = _title;
-            this.updateItem();
-            this.editMode = false;
-            this.activeToolbar = false;
-        }
+    closeEditing($event: boolean = true) {
+        this.editMode = false;
+    }
+
+    getTitle($event: string) {
+        this.editInput = $event;
+    }
+
+
+    saveTitle() {
+        this.item.content = this.editInput;
+        this.updateItem();
+        this.editMode = false;
     }
 
     canDeactivate(): boolean {
@@ -171,7 +176,7 @@ export class PomodoroComponent implements OnInit, IDeactivate {
         }
 
         if (!this.isActive && this.started) {
-            if (confirm("O seu pomodoro já foi iniciado, mudar de ítem irá resetar o pomodoro. Tem certeza?")) {
+            if (confirm("O seu pomodoro já foi iniciado, mudar de item irá reiniciar o pomodoro. Tem certeza?")) {
                 this.resetTimer();
                 return true;
             }
@@ -236,7 +241,7 @@ export class PomodoroComponent implements OnInit, IDeactivate {
     stopTimer() {
         this.pauseTimer();
         this.resetTimer();
-        this.switchTimerMode(this.currentMode)
+        this.switchTimerMode(this.currentMode);
     }
 
     startTimer(): void {
@@ -264,6 +269,7 @@ export class PomodoroComponent implements OnInit, IDeactivate {
             }
         }, 1000);
     }
+
 
     ngOnDestroy() {
         this.sub.unsubscribe();

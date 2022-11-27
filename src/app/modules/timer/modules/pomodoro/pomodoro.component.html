@@ -1,4 +1,4 @@
-<section>
+<section >
     <div
         class="header"
         (mouseenter)="mouseActive = true"
@@ -8,30 +8,32 @@
             class="edit"
             *ngIf="editMode">
  
-            <input
-                   (blur)="loseFocus()"
-                   placeholder="Digite o novo título"
-                   min="2"
-                   max="100"
-                   name="name"
-                   #name
-                   type="text">
+            <text-input
+                autofocus
+                [placeholder]="'Digite um novo título'"
+                [InitValue]="editInput"
+                ($value)="getTitle($event)"
+                ($blur)="loseFocus()"
+                ($esc)="closeEditing()"
+                ($enter)="saveTitle()"
+            >
+            </text-input>
             
-            <button *ngIf="!activeToolbar"
-                (click)="this.saveTitle(name.value)">
-                save
+            <button *ngIf="editInput.length >= 3"
+                    [showDelay]="300"
+                    [tooltip]="'Salvar'"
+                    [style.cursor]="'pointer'"
+                (click)="this.saveTitle()">
+                <div></div>
             </button>
  
             <button
-                *ngIf="activeToolbar"
+                *ngIf="editInput.length < 3"
                 [tooltipAlways]="true"
-                [hideDelay]="3000"
                 [tooltip]="'O título precisa ter 3 ou mais caracteres'"
-                (click)="this.saveTitle(name.value)">
-                save
+                (click)="this.saveTitle()">
+                <div class="inactive"></div>
             </button>
-            <div
-            ></div>
  
         </div>
         <div
@@ -47,13 +49,13 @@
                  (click)="editMode = !editMode">
             </div>
         </div>
-    </div>
-    <div *ngIf="pomodoroCurrentSection <= pomodoroMaxSessions">
-        <p>Sessão</p>
-        <p>{{pomodoroCurrentSection}} de {{pomodoroMaxSessions}}</p>
-    </div>
-    <div  *ngIf="pomodoroCurrentSection > pomodoroMaxSessions">
-        <p>Item finalizado! Parabéns ✨</p>
+        <div *ngIf="pomodoroCurrentSection <= pomodoroMaxSessions">
+            <p>Sessão:</p>
+            <p>{{pomodoroCurrentSection}} <small>de</small> {{pomodoroMaxSessions}}</p>
+        </div>
+        <div  *ngIf="pomodoroCurrentSection > pomodoroMaxSessions">
+            <p>Item finalizado! Parabéns ✨</p>
+        </div>
     </div>
 
     <div class="clock">
