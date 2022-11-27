@@ -42,7 +42,7 @@ export class TooltipDirective implements OnDestroy {
     // For Dynamic
     @HostListener('mousemove', ['$event'])
     onMouseMove($event: MouseEvent): void {
-        if (this.componentRef !== null && this.tooltipPosition === TooltipPosition.DYNAMIC) {
+        if (this.componentRef !== undefined && this.tooltipPosition === TooltipPosition.DYNAMIC) {
             this.componentRef.instance.left = $event.clientX;
             this.componentRef.instance.top = $event.clientY;
             this.componentRef.instance.tooltip = this.tooltip;
@@ -51,8 +51,7 @@ export class TooltipDirective implements OnDestroy {
 
     //For mobile
     @HostListener('touchstart', ['$event'])
-    onTouchStart($event: TouchEvent): void {
-        $event.preventDefault();
+    onTouchStart(): void {
         window.clearTimeout(this.touchTimeout);
         this.touchTimeout = window.setTimeout(this.initializeTooltip.bind(this), 500);
     }
@@ -66,7 +65,6 @@ export class TooltipDirective implements OnDestroy {
     //For desktop
     @HostListener('mouseenter')
     onMouseEnter(): void {
-        if (this.componentRef === undefined)
         this.initializeTooltip();
 
     }
@@ -74,10 +72,11 @@ export class TooltipDirective implements OnDestroy {
     //For desktop
     @HostListener('mouseleave')
     onMouseLeave(): void {
-        if (this.componentRef.instance.visible)
-        this.setHideTooltipTimeout();
+        if (this.componentRef.instance.visible) {
+            this.setHideTooltipTimeout();
+        }
 
-        this.destroy()
+        this.destroy();
     }
 
     initializeTooltip() {
@@ -91,7 +90,7 @@ export class TooltipDirective implements OnDestroy {
         this.componentRef.instance.position = this.tooltipPosition;
         this.componentRef.instance.theme = this.theme;
 
-        const {left, right, top, bottom, width} = this.elementRef.nativeElement.getBoundingClientRect();
+        const {left, right, top, bottom} = this.elementRef.nativeElement.getBoundingClientRect();
 
         switch (this.tooltipPosition) {
             case TooltipPosition.BELOW: {
@@ -126,8 +125,8 @@ export class TooltipDirective implements OnDestroy {
         this.componentRef.instance.visible = true;
     }
     private hideTooltip() {
-        if (this.componentRef !== null)
-        this.componentRef.instance.visible = false;
+        if (this.componentRef !== undefined)
+            this.componentRef.instance.visible = false;
     }
 
     private setHideTooltipTimeout() {
@@ -135,9 +134,10 @@ export class TooltipDirective implements OnDestroy {
     }
 
     destroy(): void {
-        if (this.componentRef !== null) {
+        if (this.componentRef !== undefined) {
             window.clearInterval(this.showTimeout);
             window.clearInterval(this.hideDelay);
+            this.componentRef.destroy();
         }
     }
 }

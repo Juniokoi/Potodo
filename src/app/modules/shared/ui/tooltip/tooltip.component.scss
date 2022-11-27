@@ -3,11 +3,11 @@
 $fg: #{$text-primary}22;
 $bg: $crust;
 
-@mixin border($size, $color) {
+@mixin border($size, $color, $direction) {
     border-left: $size+px solid transparent;
     border-right: $size+px solid transparent;
-    border-bottom: $size+px solid $color;
-    left: calc(50% - #{$size}px);
+    border-#{$direction}: $size+px solid $color;
+    left: calc(50% - $size * 1px);
 }
 
 .tooltip {
@@ -18,10 +18,10 @@ $bg: $crust;
     border-radius: 4px;
     padding: 10px 10px;
     font-size: 13px;
-    z-index: 5;
     border: 1px solid $fg;
     max-width: 100px;
     text-align: center;
+    z-index: 10;
     box-shadow: 0 4px 15px #{$bg}aa;
 
     &::before, &::after {
@@ -38,31 +38,30 @@ $bg: $crust;
     margin-top: 7px;
 
     &::before {
-        @include border(6, $fg);
+        @include border(6, $fg, bottom);
         top: -6px;
         z-index: 3;
     }
     &::after {
-        @include border(5, $bg);
+        @include border(5, $bg, bottom);
         top: -5px;
-        z-index: 6;
+        z-index: 4;
     }
 }
 
 .above {
-    transform: translate(-50%, -100%);
-    margin-bottom: 7px;
+    transform: translate(-50%, -115%);
 
     &::before, &::after {
-        bottom: -7px;
+        bottom: -5px;
     }
     &::before {
-        @include border(6, $fg);
-        z-index: 3;
+        @include border(7, $fg, top);
+        z-index: -2;
     }
     &::after {
-        @include border(5, $bg);
-        z-index: 6;
+        @include border(8, $bg, top);
+        z-index: -1;
     }
 }
 
@@ -105,15 +104,6 @@ $bg: $crust;
 }
 
 .light {
-    background-color: $bg;
-    color: $text-primary;
-
-    &::before {
-        border: 5px solid $fg;
-    }
-}
-
-.dark {
     background-color: $bg;
     color: $text-primary;
 
