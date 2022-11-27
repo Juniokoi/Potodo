@@ -16,7 +16,6 @@ export class ListComponent implements OnInit {
 
     items: IItem[] = this._service.getListItems();
     hoverItem = "";
-    tooltipPosition: TooltipPosition = TooltipPosition.BELOW;
 
     constructor(
         private _injector: Injector,
@@ -25,7 +24,6 @@ export class ListComponent implements OnInit {
     ) {
         this.componentSwitcher = false;
         this._dyn.output$.subscribe((data) => {
-            console.log(data);
             this.componentSwitcher = data;
         })
     }

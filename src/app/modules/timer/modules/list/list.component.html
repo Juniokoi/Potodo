@@ -29,19 +29,18 @@
                            type="button"
                            aria-label="Deletar item"
                             [tooltip]="'Deletar item'"
-                            [tooltipPosition]="tooltipPosition"
                             [showDelay]="300"
                             [hideDelay]="500"
                     >
                         <div class="delete__icon --trash"></div>
                     </button>
+                    
                     <button class="pomodoro"
                            (click)="setRoute(item.id)"
                            [routerLink]="['/timer/',item.id]"
                            type="button"
                            aria-label="Entrar no temporizador"
                             [tooltip]="'Ir para o temporizador'"
-                            [tooltipPosition]="tooltipPosition"
                             [showDelay]="1000"
                             [hideDelay]="200"
                     >

@@ -90,7 +90,7 @@ $margin_top: 150px;
 
     & .--trash {
         background-color: #4d0404;
-        mask: url("/assets/icons/timer/Trash.svg") center no-repeat;
+        mask: url("/app/assets/icons/timer/Trash.svg") center no-repeat;
 
         &:hover {
             background-color: #2d0000;
@@ -103,7 +103,7 @@ $margin_top: 150px;
 
     & .--redirect {
         background-color: $text-on-tooltip;
-        mask: url("/assets/icons/timer/SquareOut.svg") center no-repeat;
+        mask: url("/app/assets/icons/timer/SquareOut.svg") center no-repeat;
         z-index: 2;
     }
 }
