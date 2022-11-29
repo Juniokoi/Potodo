@@ -9,13 +9,8 @@
                  >
                 
                 <div class="item__content">
-                     <input class="checkbox"
-                            (click)="checkTask(item.id,  !item.complete)"
-                            name="check"
-                            type="checkbox"
-                            [checked]="item.complete"
-                     >
-                    
+                    <checkbox [isChecked]="item.complete" (click)="checkTask(item.id,  !item.complete)"></checkbox>
+       
                     <div class="item__content--text" [ngClass]="{'checked': item.complete}">
                         {{item.content}}
                     </div>

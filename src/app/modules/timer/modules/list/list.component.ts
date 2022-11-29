@@ -3,7 +3,7 @@ import {TimerService} from "../../timer.service";
 import {IItem} from '../../../shared/interfaces/IItem';
 import {TooltipPosition} from "../../../shared/ui/tooltip/TooltipPosition.enums";
 import {AddItemComponent} from "./components/add-item/add-item.component";
-import {DynamicService} from "./components/services/dynamic.service";
+import {DynamicService} from "./services/dynamic.service";
 
 @Component({
     selector: 'list',

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TimerService} from "../../../../timer.service";
-import {DynamicService} from "../services/dynamic.service";
+import {DynamicService} from "../../services/dynamic.service";
 
 @Component({
     selector: 'app-add-item',
