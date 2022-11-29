@@ -7,6 +7,7 @@ A unique focus app
 <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
 </h3>
 &nbsp;
+
 <div align="center">
 <img src="https://img.shields.io/github/license/PotodoApp/potodo?color=blue"> 
 </div>
