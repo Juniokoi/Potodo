@@ -21,7 +21,6 @@ input[type = "checkbox"] {
     }
 
     &:after {
-        mask: url("/assets/icons/timer/Check.svg");
         transform: scale(0%);
         transition: transform 200ms ease-in-out;
     }
@@ -34,11 +33,14 @@ input[type = "checkbox"] {
 
     &:checked:after {
         top: -2px;
+        transform: scale(100%);
+    }
+
+    &:after, &:checked:after {
         $size: 18px;
         width: $size;
         height: $size;
         background-color: white;
-        mask: url("/assets/icons/timer/Check.svg");
-        transform: scale(100%);
+        mask: url("/app/assets/icons/timer/Check.svg");
     }
 }

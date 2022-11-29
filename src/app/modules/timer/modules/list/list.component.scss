@@ -1,6 +1,9 @@
 @import "base";
-
 $margin_top: 150px;
+
+checkbox {
+    @include grid-center();
+}
 
 .list-body {
     position: relative;
